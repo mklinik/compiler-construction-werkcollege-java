@@ -24,6 +24,10 @@ public class Lexer {
 			return lexInteger();
 		}
 
+		if (input.charAt(currentPosition) == '+') {
+			return new Token(TokenType.TOK_PLUS);
+		}
+
 		return new TokenError("Unknown character in input: '"
 				+ input.charAt(currentPosition) + "'");
 	}
