@@ -15,7 +15,9 @@ public class LexerTest {
 	@Test
 	public void testSingleInteger() {
 		Lexer l = new Lexer("5");
-		assertEquals(TokenType.TOK_INT, l.nextToken().getTokenType());
+		Token t = l.nextToken();
+		assertEquals(TokenType.TOK_INT, t.getTokenType());
+		assertEquals(5, ((TokenInteger)t).getValue());
 	}
 
 }
