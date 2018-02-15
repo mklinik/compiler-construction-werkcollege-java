@@ -14,7 +14,7 @@ public class Lexer {
 			currentPosition++;
 		}
 	}
-	
+
 	Token nextToken()
 	{
 		skipWhitespace();
