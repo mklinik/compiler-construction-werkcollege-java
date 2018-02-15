@@ -45,8 +45,8 @@ public class ParserTest {
 		Parser p = new Parser("1*2+3");
 		AstExpr ast = p.pExpr();
 		assertEquals(new AstExprBinOp(new AstExprBinOp(new AstExprInteger(1),
-				TokenType.TOK_MULT, new AstExprInteger(2)),
-				TokenType.TOK_PLUS, new AstExprInteger(3)), ast);
+				TokenType.TOK_MULT, new AstExprInteger(2)), TokenType.TOK_PLUS,
+				new AstExprInteger(3)), ast);
 	}
 
 	@Test

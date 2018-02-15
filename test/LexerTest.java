@@ -43,7 +43,7 @@ public class LexerTest {
 		Token t = l.nextToken();
 		assertEquals(TokenType.TOK_MINUS, t.getTokenType());
 	}
-	
+
 	@Test
 	public void testSingleMult() {
 		Lexer l = new Lexer("*");
