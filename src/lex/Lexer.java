@@ -36,7 +36,12 @@ public class Lexer {
 			currentPosition++;
 			return new Token(TokenType.TOK_MINUS);
 		}
-
+		
+		if (input.charAt(currentPosition) == '*') {
+			currentPosition++;
+			return new Token(TokenType.TOK_MULT);
+		}
+		
 		return new TokenError("Unknown character in input: '"
 				+ input.charAt(currentPosition) + "'");
 	}
