@@ -20,7 +20,7 @@ public class Lexer {
 		skipWhitespace();
 		if( currentPosition >= input.length() )
 		{
-			return new TokenEOF();
+			return new Token(TokenType.TOK_EOF);
 		}
 		
 		// We have at least one character in the input

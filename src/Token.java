@@ -1,12 +1,13 @@
 
-public abstract class Token {
-	protected TokenType tokenType;
+public class Token {
+	private final TokenType tokenType;
+	
+	public Token(TokenType tokType)
+	{
+		tokenType = tokType;
+	}
 
 	TokenType getTokenType() {
 		return tokenType;
-	}
-
-	void setTokenType(TokenType tokenType) {
-		this.tokenType = tokenType;
 	}
 }

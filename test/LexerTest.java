@@ -19,5 +19,12 @@ public class LexerTest {
 		assertEquals(TokenType.TOK_INT, t.getTokenType());
 		assertEquals(5, ((TokenInteger)t).getValue());
 	}
+	
+	@Test
+	public void testSinglePlus() {
+		Lexer l = new Lexer("+");
+		Token t = l.nextToken();
+		assertEquals(TokenType.TOK_PLUS, t.getTokenType());
+	}
 
 }
