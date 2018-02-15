@@ -116,7 +116,6 @@ public class LexerTest {
 		assertEquals(TokenType.TOK_IDENTIFIER, t.getTokenType());
 		assertEquals("missPiggy", ((TokenIdentifier) t).getValue());
 	}
-	
 
 	@Test
 	public void testIdentifierWithDigits() {
@@ -124,5 +123,19 @@ public class LexerTest {
 		Token t = l.nextToken();
 		assertEquals(TokenType.TOK_IDENTIFIER, t.getTokenType());
 		assertEquals("mi55Piggy23", ((TokenIdentifier) t).getValue());
+	}
+
+	@Test
+	public void testKeywordIf() {
+		Lexer l = new Lexer("if");
+		Token t = l.nextToken();
+		assertEquals(TokenType.TOK_KW_IF, t.getTokenType());
+	}
+
+	@Test
+	public void testKeywordPrefix() {
+		Lexer l = new Lexer("iffy");
+		Token t = l.nextToken();
+		assertEquals(TokenType.TOK_IDENTIFIER, t.getTokenType());
 	}
 }

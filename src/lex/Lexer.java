@@ -76,13 +76,22 @@ public class Lexer {
 	}
 
 	Token lexIdentifier() {
-		StringBuilder result = new StringBuilder();
+		StringBuilder resultBuilder = new StringBuilder();
 		while (currentPosition < input.length()
 				&& (Character.isAlphabetic(input.charAt(currentPosition)) || Character
 						.isDigit(input.charAt(currentPosition)))) {
-			result.append(input.charAt(currentPosition));
+			resultBuilder.append(input.charAt(currentPosition));
 			currentPosition++;
 		}
-		return new TokenIdentifier(result.toString());
+		
+		String result = resultBuilder.toString();
+
+		// Check if the identifier is one of the reserved keywords
+		if (result.equals("if")) {
+			return new Token(TokenType.TOK_KW_IF);
+		}
+
+		// Identifier is not a keyword, so we treat it as identifier
+		return new TokenIdentifier(result);
 	}
 }
