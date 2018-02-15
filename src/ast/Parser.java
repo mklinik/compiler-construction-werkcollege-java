@@ -55,6 +55,11 @@ public class Parser {
 			AstExpr rhs = pTerm();
 			return pExpr_(new AstExprBinOp(lhs, TokenType.TOK_PLUS, rhs));
 		}
+		
+		if(match(TokenType.TOK_MINUS)) {
+			AstExpr rhs = pTerm();
+			return pExpr_(new AstExprBinOp(lhs, TokenType.TOK_MINUS, rhs));
+		}
 
 		return lhs;
 	}
