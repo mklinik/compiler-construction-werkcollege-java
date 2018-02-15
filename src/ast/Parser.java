@@ -30,18 +30,24 @@ public class Parser {
 	}
 
 	public AstExpr pExpr() {
-		return pSum();
+		AstExpr ast = pTerm();
+		return pExpr_(ast);
 	}
 
-	public AstExpr pSum() {
-		AstExpr lhs = pFactor();
+
+	public AstExpr pExpr_(AstExpr lhs) {
 		next();
 		if (match(TokenType.TOK_PLUS)) {
-			AstExpr rhs = pSum();
-			return new AstExprBinOp(lhs, TokenType.TOK_PLUS, rhs);
+			AstExpr rhs = pTerm();
+			return pExpr_(new AstExprBinOp(lhs, TokenType.TOK_PLUS, rhs));
 		}
 
 		return lhs;
+	}
+	
+	public AstExpr pTerm()
+	{
+		return pFactor();
 	}
 
 	public AstExpr pFactor() {
