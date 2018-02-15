@@ -1,9 +1,7 @@
-
 public class Token {
 	private final TokenType tokenType;
-	
-	public Token(TokenType tokType)
-	{
+
+	public Token(TokenType tokType) {
 		tokenType = tokType;
 	}
 
