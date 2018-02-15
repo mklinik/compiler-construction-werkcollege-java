@@ -7,26 +7,31 @@ import lex.TokenType;
 public class Parser {
 	private Lexer lexer;
 	private Token currentToken;
-	
+
 	// =========================================================
 	// Constructors
 	// =========================================================
 
 	public Parser(Lexer l) {
 		lexer = l;
+		next();
 	}
 
 	public Parser(String input) {
 		lexer = new Lexer(input);
+		next();
 	}
-	
+
 	// =========================================================
 	// Helper functions
 	// =========================================================
 
-	// Helper function to fetch the next token
-	private void next() {
+	// Helper function to fetch the next token. Convention: A parser calls next
+	// whenever it consumes a token.
+	private Token next() {
+		Token oldToken = currentToken;
 		currentToken = lexer.nextToken();
+		return oldToken;
 	}
 
 	// Helper function to check the type of the current token
@@ -39,26 +44,27 @@ public class Parser {
 		return new Error(name + ": unexpected token "
 				+ currentToken.getTokenType().toString());
 	}
-	
+
 	// ==========================================================
 	// The actual parser
 	// ==========================================================
 
 	public AstExpr pExpr() {
-		AstExpr ast = pTerm();
-		return pExpr_(ast);
+		AstExpr lhs = pTerm();
+		return pExpr_(lhs);
 	}
 
 	public AstExpr pExpr_(AstExpr lhs) {
-		next();
-		
-		// Plus and minus have the same precedence, therefore they are in the same rule
+		// Plus and minus have the same precedence, therefore they are in the
+		// same rule
 		if (match(TokenType.TOK_PLUS)) {
+			next();
 			AstExpr rhs = pTerm();
 			return pExpr_(new AstExprBinOp(lhs, TokenType.TOK_PLUS, rhs));
 		}
-		
-		if(match(TokenType.TOK_MINUS)) {
+
+		if (match(TokenType.TOK_MINUS)) {
+			next();
 			AstExpr rhs = pTerm();
 			return pExpr_(new AstExprBinOp(lhs, TokenType.TOK_MINUS, rhs));
 		}
@@ -67,13 +73,22 @@ public class Parser {
 	}
 
 	public AstExpr pTerm() {
-		return pFactor();
+		AstExpr lhs = pFactor();
+		return pTerm_(lhs);
+	}
+
+	private AstExpr pTerm_(AstExpr lhs) {
+		if (match(TokenType.TOK_MULT)) {
+			next();
+			AstExpr rhs = pFactor();
+			return pTerm_(new AstExprBinOp(lhs, TokenType.TOK_MULT, rhs));
+		}
+		return lhs;
 	}
 
 	public AstExpr pFactor() {
-		next();
 		if (match(TokenType.TOK_INT)) {
-			return new AstExprInteger(currentToken);
+			return new AstExprInteger(next());
 		}
 
 		throw error("pFactor");
