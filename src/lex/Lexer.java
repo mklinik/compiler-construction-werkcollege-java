@@ -15,6 +15,11 @@ public class Lexer {
 		}
 	}
 
+	private boolean match(char c) {
+		return currentPosition < input.length()
+				&& input.charAt(currentPosition) == c;
+	}
+
 	public Token nextToken() {
 		skipWhitespace();
 		if (currentPosition >= input.length()) {
@@ -22,26 +27,33 @@ public class Lexer {
 		}
 
 		// From here on, we have at least one character in the input
-		
+
 		if (Character.isDigit(input.charAt(currentPosition))) {
 			return lexInteger();
 		}
 
-		if (input.charAt(currentPosition) == '+') {
+		if (match('+')) {
 			currentPosition++;
+			// Just an example how to lex operators that consist of two
+			// characters.
+			if (match('=')) {
+				currentPosition++;
+				return new Token(TokenType.TOK_PLUS_EQUALS);
+			}
+			// Otherwise, we've seen nothing.
 			return new Token(TokenType.TOK_PLUS);
 		}
-		
-		if (input.charAt(currentPosition) == '-') {
+
+		if (match('-')) {
 			currentPosition++;
 			return new Token(TokenType.TOK_MINUS);
 		}
-		
-		if (input.charAt(currentPosition) == '*') {
+
+		if (match('*')) {
 			currentPosition++;
 			return new Token(TokenType.TOK_MULT);
 		}
-		
+
 		return new TokenError("Unknown character in input: '"
 				+ input.charAt(currentPosition) + "'");
 	}
