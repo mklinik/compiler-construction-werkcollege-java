@@ -54,6 +54,10 @@ public class Lexer {
 			return new Token(TokenType.TOK_MULT);
 		}
 
+		if (Character.isAlphabetic(input.charAt(currentPosition))) {
+			return lexIdentifier();
+		}
+
 		return new TokenError("Unknown character in input: '"
 				+ input.charAt(currentPosition) + "'");
 	}
@@ -69,5 +73,16 @@ public class Lexer {
 		}
 
 		return new TokenInteger(currentValue);
+	}
+
+	Token lexIdentifier() {
+		StringBuilder result = new StringBuilder();
+		while (currentPosition < input.length()
+				&& (Character.isAlphabetic(input.charAt(currentPosition)) || Character
+						.isDigit(input.charAt(currentPosition)))) {
+			result.append(input.charAt(currentPosition));
+			currentPosition++;
+		}
+		return new TokenIdentifier(result.toString());
 	}
 }

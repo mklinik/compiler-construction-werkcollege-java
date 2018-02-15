@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 import lex.Lexer;
 import lex.Token;
+import lex.TokenIdentifier;
 import lex.TokenInteger;
 import lex.TokenType;
 
@@ -106,5 +107,22 @@ public class LexerTest {
 		assertEquals(TokenType.TOK_INT, t7.getTokenType());
 		assertEquals(TokenType.TOK_MINUS, t8.getTokenType());
 		assertEquals(TokenType.TOK_EOF, t9.getTokenType());
+	}
+
+	@Test
+	public void testIdentifier() {
+		Lexer l = new Lexer("missPiggy");
+		Token t = l.nextToken();
+		assertEquals(TokenType.TOK_IDENTIFIER, t.getTokenType());
+		assertEquals("missPiggy", ((TokenIdentifier) t).getValue());
+	}
+	
+
+	@Test
+	public void testIdentifierWithDigits() {
+		Lexer l = new Lexer("mi55Piggy23");
+		Token t = l.nextToken();
+		assertEquals(TokenType.TOK_IDENTIFIER, t.getTokenType());
+		assertEquals("mi55Piggy23", ((TokenIdentifier) t).getValue());
 	}
 }
