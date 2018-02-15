@@ -1,8 +1,10 @@
-
 import static org.junit.Assert.*;
+import lex.Lexer;
+import lex.Token;
+import lex.TokenInteger;
+import lex.TokenType;
 
 import org.junit.Test;
-
 
 public class LexerTest {
 
@@ -11,15 +13,23 @@ public class LexerTest {
 		Lexer l = new Lexer("");
 		assertEquals(TokenType.TOK_EOF, l.nextToken().getTokenType());
 	}
-	
+
 	@Test
-	public void testSingleInteger() {
+	public void testSingleDigitInteger() {
 		Lexer l = new Lexer("5");
 		Token t = l.nextToken();
 		assertEquals(TokenType.TOK_INT, t.getTokenType());
-		assertEquals(5, ((TokenInteger)t).getValue());
+		assertEquals(5, ((TokenInteger) t).getValue());
 	}
-	
+
+	@Test
+	public void testMultiDigitInteger() {
+		Lexer l = new Lexer("4545372");
+		Token t = l.nextToken();
+		assertEquals(TokenType.TOK_INT, t.getTokenType());
+		assertEquals(4545372, ((TokenInteger) t).getValue());
+	}
+
 	@Test
 	public void testSinglePlus() {
 		Lexer l = new Lexer("+");
@@ -27,4 +37,37 @@ public class LexerTest {
 		assertEquals(TokenType.TOK_PLUS, t.getTokenType());
 	}
 
+	@Test
+	public void testMultipleIntegers() {
+		Lexer l = new Lexer("12 34");
+		Token t1 = l.nextToken();
+		Token t2 = l.nextToken();
+		assertEquals(TokenType.TOK_INT, t1.getTokenType());
+		assertEquals(TokenType.TOK_INT, t2.getTokenType());
+		assertEquals(12, ((TokenInteger) t1).getValue());
+		assertEquals(34, ((TokenInteger) t2).getValue());
+	}
+	
+	@Test
+	public void testSimpleExpression(){
+		Lexer l = new Lexer("1 + 12 + 300+4+");
+		Token t1 = l.nextToken();
+		Token t2 = l.nextToken();
+		Token t3 = l.nextToken();
+		Token t4 = l.nextToken();
+		Token t5 = l.nextToken();
+		Token t6 = l.nextToken();
+		Token t7 = l.nextToken();
+		Token t8 = l.nextToken();
+		Token t9 = l.nextToken();
+		assertEquals(TokenType.TOK_INT, t1.getTokenType());
+		assertEquals(TokenType.TOK_PLUS, t2.getTokenType());
+		assertEquals(TokenType.TOK_INT, t3.getTokenType());
+		assertEquals(TokenType.TOK_PLUS, t4.getTokenType());
+		assertEquals(TokenType.TOK_INT, t5.getTokenType());
+		assertEquals(TokenType.TOK_PLUS, t6.getTokenType());
+		assertEquals(TokenType.TOK_INT, t7.getTokenType());
+		assertEquals(TokenType.TOK_PLUS, t8.getTokenType());
+		assertEquals(TokenType.TOK_EOF, t9.getTokenType());
+	}
 }

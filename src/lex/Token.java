@@ -1,3 +1,4 @@
+package lex;
 public class Token {
 	private final TokenType tokenType;
 
@@ -5,7 +6,7 @@ public class Token {
 		tokenType = tokType;
 	}
 
-	TokenType getTokenType() {
+	public TokenType getTokenType() {
 		return tokenType;
 	}
 }

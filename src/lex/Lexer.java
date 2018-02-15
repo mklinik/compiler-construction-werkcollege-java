@@ -1,8 +1,10 @@
+package lex;
+
 public class Lexer {
 	String input = null;
 	int currentPosition = 0;
 
-	Lexer(String inp) {
+	public Lexer(String inp) {
 		input = inp;
 	}
 
@@ -13,7 +15,7 @@ public class Lexer {
 		}
 	}
 
-	Token nextToken() {
+	public Token nextToken() {
 		skipWhitespace();
 		if (currentPosition >= input.length()) {
 			return new Token(TokenType.TOK_EOF);
@@ -25,6 +27,7 @@ public class Lexer {
 		}
 
 		if (input.charAt(currentPosition) == '+') {
+			currentPosition++;
 			return new Token(TokenType.TOK_PLUS);
 		}
 
