@@ -51,6 +51,8 @@ public class Parser {
 
 	public AstExpr pExpr_(AstExpr lhs) {
 		next();
+		
+		// Plus and minus have the same precedence, therefore they are in the same rule
 		if (match(TokenType.TOK_PLUS)) {
 			AstExpr rhs = pTerm();
 			return pExpr_(new AstExprBinOp(lhs, TokenType.TOK_PLUS, rhs));
