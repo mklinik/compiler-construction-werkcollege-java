@@ -12,9 +12,9 @@ public class Parser {
 		lexer = new Lexer(input);
 	}
 	
-	public AstNode pExpr()
+	public AstExpr pExpr()
 	{
-		return new AstError("pExpr not implemented yet");
+		throw new Error("pExpr not implemented yet");
 	}
 
 }
