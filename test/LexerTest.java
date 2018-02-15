@@ -38,6 +38,13 @@ public class LexerTest {
 	}
 
 	@Test
+	public void testSingleMinus() {
+		Lexer l = new Lexer("-");
+		Token t = l.nextToken();
+		assertEquals(TokenType.TOK_MINUS, t.getTokenType());
+	}
+
+	@Test
 	public void testMultipleIntegers() {
 		Lexer l = new Lexer("12 34");
 		Token t1 = l.nextToken();
@@ -68,6 +75,29 @@ public class LexerTest {
 		assertEquals(TokenType.TOK_PLUS, t6.getTokenType());
 		assertEquals(TokenType.TOK_INT, t7.getTokenType());
 		assertEquals(TokenType.TOK_PLUS, t8.getTokenType());
+		assertEquals(TokenType.TOK_EOF, t9.getTokenType());
+	}
+
+	@Test
+	public void testMixedPlussesAndMinusesExpression() {
+		Lexer l = new Lexer("1 - 12 + 300-4-");
+		Token t1 = l.nextToken();
+		Token t2 = l.nextToken();
+		Token t3 = l.nextToken();
+		Token t4 = l.nextToken();
+		Token t5 = l.nextToken();
+		Token t6 = l.nextToken();
+		Token t7 = l.nextToken();
+		Token t8 = l.nextToken();
+		Token t9 = l.nextToken();
+		assertEquals(TokenType.TOK_INT, t1.getTokenType());
+		assertEquals(TokenType.TOK_MINUS, t2.getTokenType());
+		assertEquals(TokenType.TOK_INT, t3.getTokenType());
+		assertEquals(TokenType.TOK_PLUS, t4.getTokenType());
+		assertEquals(TokenType.TOK_INT, t5.getTokenType());
+		assertEquals(TokenType.TOK_MINUS, t6.getTokenType());
+		assertEquals(TokenType.TOK_INT, t7.getTokenType());
+		assertEquals(TokenType.TOK_MINUS, t8.getTokenType());
 		assertEquals(TokenType.TOK_EOF, t9.getTokenType());
 	}
 }

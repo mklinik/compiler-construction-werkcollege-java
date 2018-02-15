@@ -21,7 +21,8 @@ public class Lexer {
 			return new Token(TokenType.TOK_EOF);
 		}
 
-		// We have at least one character in the input
+		// From here on, we have at least one character in the input
+		
 		if (Character.isDigit(input.charAt(currentPosition))) {
 			return lexInteger();
 		}
@@ -29,6 +30,11 @@ public class Lexer {
 		if (input.charAt(currentPosition) == '+') {
 			currentPosition++;
 			return new Token(TokenType.TOK_PLUS);
+		}
+		
+		if (input.charAt(currentPosition) == '-') {
+			currentPosition++;
+			return new Token(TokenType.TOK_MINUS);
 		}
 
 		return new TokenError("Unknown character in input: '"
