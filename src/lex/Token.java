@@ -1,4 +1,5 @@
 package lex;
+
 public class Token {
 	private final TokenType tokenType;
 

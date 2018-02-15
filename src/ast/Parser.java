@@ -34,7 +34,6 @@ public class Parser {
 		return pExpr_(ast);
 	}
 
-
 	public AstExpr pExpr_(AstExpr lhs) {
 		next();
 		if (match(TokenType.TOK_PLUS)) {
@@ -44,9 +43,8 @@ public class Parser {
 
 		return lhs;
 	}
-	
-	public AstExpr pTerm()
-	{
+
+	public AstExpr pTerm() {
 		return pFactor();
 	}
 

@@ -1,14 +1,13 @@
 package ast;
-import lex.TokenType;
 
+import lex.TokenType;
 
 public class AstExprBinOp extends AstExpr {
 	private AstExpr left;
 	private TokenType operator;
 	private AstExpr right;
 
-	public AstExprBinOp(AstExpr lhs, TokenType op,
-			AstExpr rhs) {
+	public AstExprBinOp(AstExpr lhs, TokenType op, AstExpr rhs) {
 		this.left = lhs;
 		this.operator = op;
 		this.right = rhs;

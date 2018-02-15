@@ -47,9 +47,9 @@ public class LexerTest {
 		assertEquals(12, ((TokenInteger) t1).getValue());
 		assertEquals(34, ((TokenInteger) t2).getValue());
 	}
-	
+
 	@Test
-	public void testSimpleExpression(){
+	public void testSimpleExpression() {
 		Lexer l = new Lexer("1 + 12 + 300+4+");
 		Token t1 = l.nextToken();
 		Token t2 = l.nextToken();
