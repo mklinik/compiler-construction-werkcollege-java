@@ -1,9 +1,7 @@
 package parser;
 
-public class AstNode {
+import util.Visitor;
 
-	public AstNode() {
-		// TODO Auto-generated constructor stub
-	}
-
+public abstract interface AstNode {
+	public void accept(Visitor v);
 }

@@ -1,10 +1,15 @@
 package parser;
 
+import util.Visitor;
 import lexer.Token;
 import lexer.TokenInteger;
 
 public class AstExprInteger extends AstExpr {
 	private int value;
+
+	public int getValue() {
+		return value;
+	}
 
 	public AstExprInteger(int value) {
 		this.value = value;
@@ -13,6 +18,12 @@ public class AstExprInteger extends AstExpr {
 	// Caller must make sure that Token is a TokenInteger
 	public AstExprInteger(Token tok) {
 		this.value = ((TokenInteger) tok).getValue();
+	}
+	
+	@Override
+	public void accept(Visitor v)
+	{
+		v.visit(this);
 	}
 
 	@Override

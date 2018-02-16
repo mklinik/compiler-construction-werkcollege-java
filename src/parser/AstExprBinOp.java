@@ -1,11 +1,24 @@
 package parser;
 
+import util.Visitor;
 import lexer.TokenType;
 
 public class AstExprBinOp extends AstExpr {
 	private AstExpr left;
 	private TokenType operator;
 	private AstExpr right;
+
+	public AstExpr getLeft() {
+		return left;
+	}
+
+	public TokenType getOperator() {
+		return operator;
+	}
+
+	public AstExpr getRight() {
+		return right;
+	}
 
 	public AstExprBinOp(AstExpr lhs, TokenType op, AstExpr rhs) {
 		this.left = lhs;
@@ -46,6 +59,11 @@ public class AstExprBinOp extends AstExpr {
 		} else if (!right.equals(other.right))
 			return false;
 		return true;
+	}
+
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);
 	}
 
 }
