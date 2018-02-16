@@ -1,4 +1,4 @@
-package lex;
+package lexer;
 
 public class Lexer {
 	String input = null;

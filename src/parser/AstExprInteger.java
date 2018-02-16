@@ -1,7 +1,7 @@
 package parser;
 
-import lex.Token;
-import lex.TokenInteger;
+import lexer.Token;
+import lexer.TokenInteger;
 
 public class AstExprInteger extends AstExpr {
 	private int value;

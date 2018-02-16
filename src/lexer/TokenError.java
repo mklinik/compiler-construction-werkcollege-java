@@ -1,4 +1,4 @@
-package lex;
+package lexer;
 
 public class TokenError extends Token {
 	String error;

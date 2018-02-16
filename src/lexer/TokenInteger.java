@@ -1,4 +1,4 @@
-package lex;
+package lexer;
 
 public class TokenInteger extends Token {
 	int value;

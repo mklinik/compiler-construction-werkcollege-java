@@ -1,5 +1,5 @@
 import static org.junit.Assert.*;
-import lex.TokenType;
+import lexer.TokenType;
 
 import org.junit.Test;
 

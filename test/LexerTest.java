@@ -1,9 +1,9 @@
 import static org.junit.Assert.*;
-import lex.Lexer;
-import lex.Token;
-import lex.TokenIdentifier;
-import lex.TokenInteger;
-import lex.TokenType;
+import lexer.Lexer;
+import lexer.Token;
+import lexer.TokenIdentifier;
+import lexer.TokenInteger;
+import lexer.TokenType;
 
 import org.junit.Test;
 

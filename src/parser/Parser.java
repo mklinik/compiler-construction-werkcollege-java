@@ -1,8 +1,8 @@
 package parser;
 
-import lex.Lexer;
-import lex.Token;
-import lex.TokenType;
+import lexer.Lexer;
+import lexer.Token;
+import lexer.TokenType;
 
 public class Parser {
 	private Lexer lexer;

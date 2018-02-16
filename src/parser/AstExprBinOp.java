@@ -1,6 +1,6 @@
 package parser;
 
-import lex.TokenType;
+import lexer.TokenType;
 
 public class AstExprBinOp extends AstExpr {
 	private AstExpr left;

@@ -1,4 +1,4 @@
-package lex;
+package lexer;
 
 public enum TokenType {
 	TOK_EOF, TOK_ERR, TOK_INT, TOK_PLUS, TOK_MINUS, TOK_MULT, TOK_PLUS_EQUALS, TOK_IDENTIFIER, TOK_KW_IF

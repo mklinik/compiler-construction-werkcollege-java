@@ -1,4 +1,4 @@
-package lex;
+package lexer;
 
 public class TokenIdentifier extends Token {
 	final String value;
