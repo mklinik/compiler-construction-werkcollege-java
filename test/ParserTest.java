@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import parser.*;
 
-
 public class ParserTest {
 
 	@Test

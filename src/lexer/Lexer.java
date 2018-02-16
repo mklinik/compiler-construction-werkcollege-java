@@ -83,7 +83,7 @@ public class Lexer {
 			resultBuilder.append(input.charAt(currentPosition));
 			currentPosition++;
 		}
-		
+
 		String result = resultBuilder.toString();
 
 		// Check if the identifier is one of the reserved keywords

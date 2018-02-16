@@ -19,10 +19,9 @@ public class AstExprInteger extends AstExpr {
 	public AstExprInteger(Token tok) {
 		this.value = ((TokenInteger) tok).getValue();
 	}
-	
+
 	@Override
-	public void accept(Visitor v)
-	{
+	public void accept(Visitor v) {
 		v.visit(this);
 	}
 
