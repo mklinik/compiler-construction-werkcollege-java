@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 import lexer.Lexer;
 import lexer.Token;
+import lexer.TokenBool;
 import lexer.TokenIdentifier;
 import lexer.TokenInteger;
 import lexer.TokenType;
@@ -137,5 +138,13 @@ public class LexerTest {
 		Lexer l = new Lexer("iffy");
 		Token t = l.nextToken();
 		assertEquals(TokenType.TOK_IDENTIFIER, t.getTokenType());
+	}
+
+	@Test
+	public void testBooleanConstantTrue() {
+		Lexer l = new Lexer("True");
+		Token t = l.nextToken();
+		assertEquals(TokenType.TOK_BOOL, t.getTokenType());
+		assertEquals(true, ((TokenBool)t).getValue());
 	}
 }

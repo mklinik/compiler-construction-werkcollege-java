@@ -1,6 +1,7 @@
 package util;
 
 import lexer.TokenType;
+import parser.AstExprBool;
 import parser.AstExprBinOp;
 import parser.AstExprInteger;
 
@@ -41,5 +42,10 @@ public class PrettyPrinter implements Visitor {
 		e.getLeft().accept(this);
 		printToken(e.getOperator());
 		e.getRight().accept(this);
+	}
+
+	@Override
+	public void visit(AstExprBool astBool) {
+		// TODO Auto-generated method stub		
 	}
 }

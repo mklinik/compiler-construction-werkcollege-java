@@ -90,6 +90,9 @@ public class Parser {
 		if (match(TokenType.TOK_INT)) {
 			return new AstExprInteger(next());
 		}
+		if( match(TokenType.TOK_BOOL)) {
+			return new AstExprBool(next());
+		}
 
 		throw error("pFactor");
 	}

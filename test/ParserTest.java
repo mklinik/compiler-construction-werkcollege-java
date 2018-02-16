@@ -66,4 +66,11 @@ public class ParserTest {
 				TokenType.TOK_MULT, new AstExprInteger(2)), TokenType.TOK_MULT,
 				new AstExprInteger(3)), ast);
 	}
+
+	@Test
+	public void testBooleanTrue() {
+		Parser p = new Parser("True");
+		AstExpr ast = p.pExpr();
+		assertEquals(new AstExprBool(true), ast);
+	}
 }

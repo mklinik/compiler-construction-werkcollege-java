@@ -91,6 +91,10 @@ public class Lexer {
 			return new Token(TokenType.TOK_KW_IF);
 		}
 
+		if (result.equals("True")) {
+			return new TokenBool(true);
+		}
+
 		// Identifier is not a keyword, so we treat it as identifier
 		return new TokenIdentifier(result);
 	}
