@@ -3,7 +3,8 @@ import lex.TokenType;
 
 import org.junit.Test;
 
-import ast.*;
+import parser.*;
+
 
 public class ParserTest {
 

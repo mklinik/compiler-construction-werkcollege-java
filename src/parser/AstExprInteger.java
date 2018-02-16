@@ -1,4 +1,4 @@
-package ast;
+package parser;
 
 import lex.Token;
 import lex.TokenInteger;
