@@ -13,8 +13,8 @@ public class Typechecker implements Visitor {
 	}
 
 	@Override
-	public void visit(AstExprInteger i) {
-		i.setType(new TypeInt());
+	public void visit(AstExprInteger e) {
+		e.setType(new TypeInt());
 	}
 
 	@Override
