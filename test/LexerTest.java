@@ -145,6 +145,6 @@ public class LexerTest {
 		Lexer l = new Lexer("True");
 		Token t = l.nextToken();
 		assertEquals(TokenType.TOK_BOOL, t.getTokenType());
-		assertEquals(true, ((TokenBool)t).getValue());
+		assertEquals(true, ((TokenBool) t).getValue());
 	}
 }

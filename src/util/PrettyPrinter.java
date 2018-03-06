@@ -46,6 +46,6 @@ public class PrettyPrinter implements Visitor {
 
 	@Override
 	public void visit(AstExprBool astBool) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 	}
 }

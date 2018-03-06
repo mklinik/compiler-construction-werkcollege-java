@@ -31,7 +31,6 @@ public class TypecheckerTest {
 		AstNode e = typecheckExpr("5");
 		assertEquals(new TypeInt(), e.getType());
 	}
-	
 
 	@Test
 	public void testBooleanConstant() {
