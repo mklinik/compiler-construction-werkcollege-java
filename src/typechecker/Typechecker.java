@@ -8,10 +8,6 @@ import util.Visitor;
 
 public class Typechecker implements Visitor {
 
-	public Typechecker() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public void visit(AstExprInteger e) {
 		e.setType(new TypeInt());
