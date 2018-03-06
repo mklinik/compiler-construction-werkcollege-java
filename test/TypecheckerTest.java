@@ -5,6 +5,7 @@ import org.junit.Test;
 import parser.AstExpr;
 import parser.AstNode;
 import parser.Parser;
+import typechecker.TypeBool;
 import typechecker.TypeInt;
 import typechecker.Typechecker;
 
@@ -21,6 +22,7 @@ public class TypecheckerTest {
 	@Test
 	public void testCompareTypes() {
 		assertEquals(new TypeInt(), new TypeInt());
+		assertEquals(new TypeBool(), new TypeBool());
 	}
 
 	@Test
