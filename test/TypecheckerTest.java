@@ -45,5 +45,11 @@ public class TypecheckerTest {
 		assertEquals(new TypeBool(), eTrue.getType());
 		assertEquals(new TypeBool(), eFalse.getType());
 	}
+	
+	@Test
+	public void testPlus() {
+		AstNode e = typecheckExpr("5 + 3");
+		assertEquals(new TypeInt(), e.getType());
+	}
 
 }

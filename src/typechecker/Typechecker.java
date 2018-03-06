@@ -11,14 +11,17 @@ import util.CompileError;
 import util.Visitor;
 
 public class Typechecker implements Visitor {
+	// These are for convenience.
+	private static final Type typeInt = new TypeInt();
+	private static final Type typeBool = new TypeBool();
+
 	private List<CompileError> errors = null;
 
 	public List<CompileError> getErrors() {
 		return errors;
 	}
-	
-	private void error(String errorMessage)
-	{
+
+	private void error(String errorMessage) {
 		errors.add(new CompileError(errorMessage));
 	}
 
@@ -29,9 +32,20 @@ public class Typechecker implements Visitor {
 
 	@Override
 	public void visit(AstExprBinOp e) {
+		e.getLeft().accept(this);
+		e.getRight().accept(this);
+
 		switch (e.getOperator()) {
+		case TOK_PLUS:
+		case TOK_MINUS:
+			if (e.getLeft().getType().equals(typeInt)
+					&& e.getRight().getType().equals(typeInt))
+				e.setType(typeInt);
+			break;
+
 		default:
 			error("Typechecker: Unknown operator " + e.getOperator());
+			break;
 		}
 	}
 
