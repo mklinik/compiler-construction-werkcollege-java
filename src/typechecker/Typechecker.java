@@ -14,8 +14,7 @@ public class Typechecker implements Visitor {
 
 	@Override
 	public void visit(AstExprInteger i) {
-		// TODO Auto-generated method stub
-
+		i.setType(new TypeInt());
 	}
 
 	@Override
@@ -30,9 +29,8 @@ public class Typechecker implements Visitor {
 
 	}
 
-	public void typecheck(AstNode expr) {
-		// TODO Auto-generated method stub
-
+	public void typecheck(AstNode ast) {
+		ast.accept(this);
 	}
 
 }
