@@ -24,9 +24,8 @@ public class Typechecker implements Visitor {
 	}
 
 	@Override
-	public void visit(AstExprBool astBool) {
-		// TODO Auto-generated method stub
-
+	public void visit(AstExprBool e) {
+		e.setType(new TypeBool());
 	}
 
 	public void typecheck(AstNode ast) {
