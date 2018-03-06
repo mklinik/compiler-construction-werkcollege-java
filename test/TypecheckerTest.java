@@ -22,6 +22,7 @@ public class TypecheckerTest {
 		Parser p = new Parser(input);
 		AstExpr expr = p.pExpr();
 		boolean success = tc.typecheck(expr);
+		// TODO this is bad if we want to test that the typechecker gives correct error messages for ill-typed programs.
 		assertTrue(tc.getAllErrors(), success);
 		return expr;
 	}
