@@ -33,9 +33,11 @@ public class TypecheckerTest {
 	}
 
 	@Test
-	public void testBooleanConstant() {
-		AstNode e = typecheckExpr("True");
-		assertEquals(new TypeBool(), e.getType());
+	public void testBooleanConstantTrue() {
+		AstNode eTrue = typecheckExpr("True");
+		AstNode eFalse = typecheckExpr("False");
+		assertEquals(new TypeBool(), eTrue.getType());
+		assertEquals(new TypeBool(), eFalse.getType());
 	}
 
 }
