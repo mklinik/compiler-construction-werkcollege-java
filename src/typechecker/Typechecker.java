@@ -58,6 +58,12 @@ public class Typechecker implements Visitor {
 				e.setType(typeInt);
 			break;
 
+		case TOK_LESS_THAN:
+			if (e.getLeft().getType().equals(typeInt)
+					&& e.getRight().getType().equals(typeInt))
+				e.setType(typeBool);
+			break;
+
 		default:
 			error("Typechecker: Unknown operator " + e.getOperator());
 			break;

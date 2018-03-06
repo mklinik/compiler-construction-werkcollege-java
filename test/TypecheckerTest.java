@@ -52,5 +52,11 @@ public class TypecheckerTest {
 		AstNode e = typecheckExpr("5 + 3");
 		assertEquals(new TypeInt(), e.getType());
 	}
+	
+	@Test
+	public void testLessThan() {
+		AstNode e = typecheckExpr("5 < 3");
+		assertEquals(new TypeBool(), e.getType());
+	}
 
 }
