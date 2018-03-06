@@ -1,4 +1,4 @@
 package parser;
 
-public abstract class AstExpr implements AstNode {
+public abstract class AstExpr extends AstNode {
 }
