@@ -23,6 +23,7 @@ public class TypecheckerTest {
 	public void testCompareTypes() {
 		assertEquals(new TypeInt(), new TypeInt());
 		assertEquals(new TypeBool(), new TypeBool());
+		assertNotEquals(new TypeInt(), new TypeBool());
 	}
 
 	@Test
