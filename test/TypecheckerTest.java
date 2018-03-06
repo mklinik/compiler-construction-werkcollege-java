@@ -8,11 +8,9 @@ import parser.Parser;
 import typechecker.TypeInt;
 import typechecker.Typechecker;
 
-
 public class TypecheckerTest {
-	
-	private AstNode typecheckExpr(String input)
-	{
+
+	private AstNode typecheckExpr(String input) {
 		Parser p = new Parser(input);
 		AstExpr expr = p.pExpr();
 		Typechecker t = new Typechecker();
@@ -21,7 +19,12 @@ public class TypecheckerTest {
 	}
 
 	@Test
-	public void test() {
+	public void testCompareTypes() {
+		assertEquals(new TypeInt(), new TypeInt());
+	}
+
+	@Test
+	public void testIntegerConstant() {
 		AstNode e = typecheckExpr("5");
 		assertEquals(new TypeInt(), e.getType());
 	}
