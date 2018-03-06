@@ -25,6 +25,21 @@ public class Typechecker implements Visitor {
 		errors.add(new CompileError(errorMessage));
 	}
 
+	public void printErrors() {
+		for (CompileError e : errors) {
+			System.out.println(e.getErrorMessage());
+		}
+	}
+
+	public String getAllErrors() {
+		StringBuilder result = new StringBuilder();
+		for (CompileError e : errors) {
+			result.append(e.getErrorMessage());
+			result.append("\n");
+		}
+		return result.toString();
+	}
+
 	@Override
 	public void visit(AstExprInteger e) {
 		e.setType(new TypeInt());

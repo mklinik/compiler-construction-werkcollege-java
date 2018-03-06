@@ -21,7 +21,8 @@ public class TypecheckerTest {
 	private AstNode typecheckExpr(String input) {
 		Parser p = new Parser(input);
 		AstExpr expr = p.pExpr();
-		assertTrue("Typechecking failed.", tc.typecheck(expr));
+		boolean success = tc.typecheck(expr);
+		assertTrue(tc.getAllErrors(), success);
 		return expr;
 	}
 
