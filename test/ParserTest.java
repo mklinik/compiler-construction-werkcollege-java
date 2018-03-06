@@ -73,4 +73,12 @@ public class ParserTest {
 		AstExpr ast = p.pExpr();
 		assertEquals(new AstExprBool(true), ast);
 	}
+	
+	@Test
+	public void testLessThan() {
+		Parser p = new Parser("42 < 100");
+		AstExpr ast = p.pExpr();
+		assertEquals(new AstExprBinOp(new AstExprInteger(42),
+				TokenType.TOK_LESS_THAN, new AstExprInteger(100)), ast);
+	}
 }

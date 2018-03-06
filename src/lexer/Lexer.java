@@ -53,6 +53,11 @@ public class Lexer {
 			currentPosition++;
 			return new Token(TokenType.TOK_MULT);
 		}
+		
+		if (match('<')) {
+			currentPosition++;
+			return new Token(TokenType.TOK_LESS_THAN);
+		}
 
 		if (Character.isAlphabetic(input.charAt(currentPosition))) {
 			return lexIdentifier();

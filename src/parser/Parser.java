@@ -50,43 +50,64 @@ public class Parser {
 	// ==========================================================
 
 	public AstExpr pExpr() {
-		AstExpr lhs = pTerm();
-		return pExpr_(lhs);
+		return pExpr1();
 	}
 
-	public AstExpr pExpr_(AstExpr lhs) {
+	public AstExpr pExpr1() {
+		AstExpr lhs = pExpr2();
+		return pExpr1_(lhs);
+	}
+	
+	public AstExpr pExpr1_(AstExpr lhs)
+	{
+		if (match(TokenType.TOK_LESS_THAN)) {
+			next();
+			AstExpr rhs = pExpr2();
+			return pExpr1_(new AstExprBinOp(lhs, TokenType.TOK_LESS_THAN, rhs));
+		}
+
+		return lhs;
+	}
+
+	
+	public AstExpr pExpr2() {
+		AstExpr lhs = pExpr3();
+		return pExpr2_(lhs);
+	}
+
+	public AstExpr pExpr2_(AstExpr lhs) {
 		// Plus and minus have the same precedence, therefore they are in the
 		// same rule
 		if (match(TokenType.TOK_PLUS)) {
 			next();
-			AstExpr rhs = pTerm();
-			return pExpr_(new AstExprBinOp(lhs, TokenType.TOK_PLUS, rhs));
+			AstExpr rhs = pExpr3();
+			return pExpr2_(new AstExprBinOp(lhs, TokenType.TOK_PLUS, rhs));
 		}
 
 		if (match(TokenType.TOK_MINUS)) {
 			next();
-			AstExpr rhs = pTerm();
-			return pExpr_(new AstExprBinOp(lhs, TokenType.TOK_MINUS, rhs));
+			AstExpr rhs = pExpr3();
+			return pExpr2_(new AstExprBinOp(lhs, TokenType.TOK_MINUS, rhs));
 		}
 
 		return lhs;
 	}
 
-	public AstExpr pTerm() {
-		AstExpr lhs = pFactor();
-		return pTerm_(lhs);
+	public AstExpr pExpr3() {
+		AstExpr lhs = pBaseExpr();
+		return pExpr3_(lhs);
 	}
 
-	private AstExpr pTerm_(AstExpr lhs) {
+	private AstExpr pExpr3_(AstExpr lhs) {
 		if (match(TokenType.TOK_MULT)) {
 			next();
-			AstExpr rhs = pFactor();
-			return pTerm_(new AstExprBinOp(lhs, TokenType.TOK_MULT, rhs));
+			AstExpr rhs = pBaseExpr();
+			return pExpr3_(new AstExprBinOp(lhs, TokenType.TOK_MULT, rhs));
 		}
 		return lhs;
 	}
 
-	public AstExpr pFactor() {
+	public AstExpr pBaseExpr() {
 		if (match(TokenType.TOK_INT)) {
 			return new AstExprInteger(next());
 		}
