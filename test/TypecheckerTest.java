@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import parser.AstExpr;
@@ -10,12 +11,17 @@ import typechecker.TypeInt;
 import typechecker.Typechecker;
 
 public class TypecheckerTest {
+	private Typechecker tc = null;
+	
+	@Before
+	public void setUp() throws Exception {
+		tc = new Typechecker();
+	}
 
 	private AstNode typecheckExpr(String input) {
 		Parser p = new Parser(input);
 		AstExpr expr = p.pExpr();
-		Typechecker t = new Typechecker();
-		t.typecheck(expr);
+		assertTrue("Typechecking failed.", tc.typecheck(expr));
 		return expr;
 	}
 
