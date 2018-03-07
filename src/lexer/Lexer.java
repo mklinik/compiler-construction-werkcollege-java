@@ -53,10 +53,15 @@ public class Lexer {
 			currentPosition++;
 			return new Token(TokenType.TOK_MULT);
 		}
-		
+
 		if (match('<')) {
 			currentPosition++;
 			return new Token(TokenType.TOK_LESS_THAN);
+		}
+
+		if (match('=')) {
+			currentPosition++;
+			return new Token(TokenType.TOK_EQUALS);
 		}
 
 		if (Character.isAlphabetic(input.charAt(currentPosition))) {
@@ -99,9 +104,17 @@ public class Lexer {
 		if (result.equals("True")) {
 			return new TokenBool(true);
 		}
-		
+
 		if (result.equals("False")) {
 			return new TokenBool(false);
+		}
+
+		if (result.equals("let")) {
+			return new Token(TokenType.TOK_KW_LET);
+		}
+
+		if (result.equals("in")) {
+			return new Token(TokenType.TOK_KW_IN);
 		}
 
 		// Identifier is not a keyword, so we treat it as identifier

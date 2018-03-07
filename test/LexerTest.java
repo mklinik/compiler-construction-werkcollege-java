@@ -10,15 +10,17 @@ import org.junit.Test;
 
 public class LexerTest {
 
+	private Lexer l;
+
 	@Test
 	public void testEmptyString() {
-		Lexer l = new Lexer("");
+		l = new Lexer("");
 		assertEquals(TokenType.TOK_EOF, l.nextToken().getTokenType());
 	}
 
 	@Test
 	public void testSingleDigitInteger() {
-		Lexer l = new Lexer("5");
+		l = new Lexer("5");
 		Token t = l.nextToken();
 		assertEquals(TokenType.TOK_INT, t.getTokenType());
 		assertEquals(5, ((TokenInteger) t).getValue());
@@ -26,7 +28,7 @@ public class LexerTest {
 
 	@Test
 	public void testMultiDigitInteger() {
-		Lexer l = new Lexer("4545372");
+		l = new Lexer("4545372");
 		Token t = l.nextToken();
 		assertEquals(TokenType.TOK_INT, t.getTokenType());
 		assertEquals(4545372, ((TokenInteger) t).getValue());
@@ -34,28 +36,28 @@ public class LexerTest {
 
 	@Test
 	public void testSinglePlus() {
-		Lexer l = new Lexer("+");
+		l = new Lexer("+");
 		Token t = l.nextToken();
 		assertEquals(TokenType.TOK_PLUS, t.getTokenType());
 	}
 
 	@Test
 	public void testSingleMinus() {
-		Lexer l = new Lexer("-");
+		l = new Lexer("-");
 		Token t = l.nextToken();
 		assertEquals(TokenType.TOK_MINUS, t.getTokenType());
 	}
 
 	@Test
 	public void testSingleMult() {
-		Lexer l = new Lexer("*");
+		l = new Lexer("*");
 		Token t = l.nextToken();
 		assertEquals(TokenType.TOK_MULT, t.getTokenType());
 	}
 
 	@Test
 	public void testMultipleIntegers() {
-		Lexer l = new Lexer("12 34");
+		l = new Lexer("12 34");
 		Token t1 = l.nextToken();
 		Token t2 = l.nextToken();
 		assertEquals(TokenType.TOK_INT, t1.getTokenType());
@@ -66,7 +68,7 @@ public class LexerTest {
 
 	@Test
 	public void testSimpleExpression() {
-		Lexer l = new Lexer("1 + 12 + 300+4+");
+		l = new Lexer("1 + 12 + 300+4+");
 		Token t1 = l.nextToken();
 		Token t2 = l.nextToken();
 		Token t3 = l.nextToken();
@@ -89,7 +91,7 @@ public class LexerTest {
 
 	@Test
 	public void testMixedPlussesAndMinusesExpression() {
-		Lexer l = new Lexer("1 - 12 + 300-4-");
+		l = new Lexer("1 - 12 + 300-4-");
 		Token t1 = l.nextToken();
 		Token t2 = l.nextToken();
 		Token t3 = l.nextToken();
@@ -112,7 +114,7 @@ public class LexerTest {
 
 	@Test
 	public void testIdentifier() {
-		Lexer l = new Lexer("missPiggy");
+		l = new Lexer("missPiggy");
 		Token t = l.nextToken();
 		assertEquals(TokenType.TOK_IDENTIFIER, t.getTokenType());
 		assertEquals("missPiggy", ((TokenIdentifier) t).getValue());
@@ -120,7 +122,7 @@ public class LexerTest {
 
 	@Test
 	public void testIdentifierWithDigits() {
-		Lexer l = new Lexer("mi55Piggy23");
+		l = new Lexer("mi55Piggy23");
 		Token t = l.nextToken();
 		assertEquals(TokenType.TOK_IDENTIFIER, t.getTokenType());
 		assertEquals("mi55Piggy23", ((TokenIdentifier) t).getValue());
@@ -128,23 +130,38 @@ public class LexerTest {
 
 	@Test
 	public void testKeywordIf() {
-		Lexer l = new Lexer("if");
+		l = new Lexer("if");
 		Token t = l.nextToken();
 		assertEquals(TokenType.TOK_KW_IF, t.getTokenType());
 	}
 
 	@Test
 	public void testKeywordPrefix() {
-		Lexer l = new Lexer("iffy");
+		l = new Lexer("iffy");
 		Token t = l.nextToken();
 		assertEquals(TokenType.TOK_IDENTIFIER, t.getTokenType());
 	}
 
 	@Test
 	public void testBooleanConstantTrue() {
-		Lexer l = new Lexer("True");
+		l = new Lexer("True");
 		Token t = l.nextToken();
 		assertEquals(TokenType.TOK_BOOL, t.getTokenType());
 		assertEquals(true, ((TokenBool) t).getValue());
+	}
+
+	private void assertTokenType(TokenType expected) {
+		assertEquals(expected, l.nextToken().getTokenType());
+	}
+
+	@Test
+	public void testLetExpression() {
+		l = new Lexer("let x = 5 in x");
+		assertTokenType(TokenType.TOK_KW_LET);
+		assertTokenType(TokenType.TOK_IDENTIFIER);
+		assertTokenType(TokenType.TOK_EQUALS);
+		assertTokenType(TokenType.TOK_INT);
+		assertTokenType(TokenType.TOK_KW_IN);
+		assertTokenType(TokenType.TOK_IDENTIFIER);
 	}
 }

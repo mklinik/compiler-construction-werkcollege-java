@@ -12,18 +12,20 @@ import typechecker.Typechecker;
 
 public class TypecheckerTest {
 	private Typechecker tc = null;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		tc = new Typechecker();
 	}
 
+	private void assertTypecheckSuccess() {
+		assertTrue(tc.getAllErrors(), tc.getAllErrors().length() == 0);
+	}
+
 	private AstNode typecheckExpr(String input) {
 		Parser p = new Parser(input);
 		AstExpr expr = p.pExpr();
-		boolean success = tc.typecheck(expr);
-		// TODO this is bad if we want to test that the typechecker gives correct error messages for ill-typed programs.
-		assertTrue(tc.getAllErrors(), success);
+		tc.typecheck(expr);
 		return expr;
 	}
 
@@ -37,6 +39,7 @@ public class TypecheckerTest {
 	@Test
 	public void testIntegerConstant() {
 		AstNode e = typecheckExpr("5");
+		assertTypecheckSuccess();
 		assertEquals(new TypeInt(), e.getType());
 	}
 
@@ -44,19 +47,22 @@ public class TypecheckerTest {
 	public void testBooleanConstantTrue() {
 		AstNode eTrue = typecheckExpr("True");
 		AstNode eFalse = typecheckExpr("False");
+		assertTypecheckSuccess();
 		assertEquals(new TypeBool(), eTrue.getType());
 		assertEquals(new TypeBool(), eFalse.getType());
 	}
-	
+
 	@Test
 	public void testPlus() {
 		AstNode e = typecheckExpr("5 + 3");
+		assertTypecheckSuccess();
 		assertEquals(new TypeInt(), e.getType());
 	}
-	
+
 	@Test
 	public void testLessThan() {
 		AstNode e = typecheckExpr("5 < 3");
+		assertTypecheckSuccess();
 		assertEquals(new TypeBool(), e.getType());
 	}
 
