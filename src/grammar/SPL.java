@@ -45,10 +45,10 @@ public class SPL extends ExpressionTree {
 		addExpressionTo("'var' ~id '=' ~Exp ';'","VarDecl");
 		addExpressionTo("~Type ~id '=' ~Exp ';'","VarDecl");
 		
-		addExpressionTo("~id '(''){'~VarDeclStar ~StmtPlus '}'","FunDecl");
-		addExpressionTo("~id '('~FArgs '){'~VarDeclStar ~StmtPlus '}'","FunDecl");
-		addExpressionTo("~id '()::'~FunType '{'~VarDeclStar ~StmtPlus '}'","FunDecl");
-		addExpressionTo("~id '('~FArgs ')::'~FunType '{'~VarDeclStar ~StmtPlus '}'","FunDecl");
+		addExpressionTo("~id '('')''{'~VarDeclStar ~StmtPlus '}'","FunDecl");
+		addExpressionTo("~id '('~FArgs ')''{'~VarDeclStar ~StmtPlus '}'","FunDecl");
+		addExpressionTo("~id '('')''::'~FunType '{'~VarDeclStar ~StmtPlus '}'","FunDecl");
+		addExpressionTo("~id '('~FArgs ')''::'~FunType '{'~VarDeclStar ~StmtPlus '}'","FunDecl");
 		
 		addExpressionTo("~Type","RetType");
 		addExpressionTo("null","RetType");
@@ -67,9 +67,9 @@ public class SPL extends ExpressionTree {
 		addExpressionTo("~id","FArgs");
 		addExpressionTo("~id ','~FArgs","FArgs");
 		
-		addExpressionTo("'if(' ~Exp '){'~StmtStar '}else{'~StmtStar '}'","Stmt");
-		addExpressionTo("'if(' ~Exp '){'~StmtStar '}'","Stmt");
-		addExpressionTo("'while('~Exp '){'~StmtStar '}'","Stmt");
+		addExpressionTo("'if''(' ~Exp ')''{'~StmtStar '}''else''{'~StmtStar '}'","Stmt");
+		addExpressionTo("'if''(' ~Exp ')''{'~StmtStar '}'","Stmt");
+		addExpressionTo("'while''('~Exp ')''{'~StmtStar '}'","Stmt");
 		addExpressionTo("~id ~Field '=' ~Exp ';'","Stmt");
 		addExpressionTo("~FunCall ';'","Stmt");
 		addExpressionTo("'return;'","Stmt");
@@ -84,7 +84,7 @@ public class SPL extends ExpressionTree {
 		addExpressionTo("","id");
 		
 		
-		addExpressionTo("~id '()'","FunCall");
+		addExpressionTo("~id '('')'","FunCall");
 		addExpressionTo("~id '('~ActArgs ')'","FunCall");
 		
 		addExpressionTo("~Exp","ActArgs");
