@@ -45,7 +45,7 @@ public class SPL extends ExpressionTree {
 		addExpressionTo("'var' ~id '=' ~Exp ';'","VarDecl");
 		addExpressionTo("~Type ~id '=' ~Exp ';'","VarDecl");
 		
-		addExpressionTo("~id '(){'~VarDeclStar ~StmtPlus '}'","FunDecl");
+		addExpressionTo("~id '(''){'~VarDeclStar ~StmtPlus '}'","FunDecl");
 		addExpressionTo("~id '('~FArgs '){'~VarDeclStar ~StmtPlus '}'","FunDecl");
 		addExpressionTo("~id '()::'~FunType '{'~VarDeclStar ~StmtPlus '}'","FunDecl");
 		addExpressionTo("~id '('~FArgs ')::'~FunType '{'~VarDeclStar ~StmtPlus '}'","FunDecl");
