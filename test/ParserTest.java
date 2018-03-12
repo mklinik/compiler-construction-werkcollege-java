@@ -4,6 +4,7 @@ import lexer.TokenType;
 import org.junit.Test;
 
 import parser.*;
+import typechecker.TypeBool;
 
 public class ParserTest {
 
@@ -90,11 +91,11 @@ public class ParserTest {
 		assertEquals(new AstTypeInt(), t);
 	}
 
-//	@Test
-//	public void testLetBinding() {
-//		Parser p = new Parser("let foo = True in 5");
-//		AstExpr e = p.pExpr();
-//		assertEquals(new AstLetBinding("foo", new AstExprBool(true),
-//				new AstExprInteger(5)), e);
-//	}
+	@Test
+	public void testLetBinding() {
+		Parser p = new Parser("let Bool foo = True in 5");
+		AstExpr e = p.pExpr();
+		assertEquals(new AstLetBinding(new AstTypeBool(), "foo", new AstExprBool(true),
+				new AstExprInteger(5)), e);
+	}
 }
