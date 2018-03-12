@@ -4,6 +4,7 @@ import lexer.TokenType;
 import parser.AstExprBool;
 import parser.AstExprBinOp;
 import parser.AstExprInteger;
+import parser.AstIdentifier;
 import parser.AstLetBinding;
 import parser.AstTypeBool;
 import parser.AstTypeInt;
@@ -66,6 +67,12 @@ public class PrettyPrinter implements Visitor {
 
 	@Override
 	public void visit(AstTypeBool astTypeBool) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visit(AstIdentifier astIdentifier) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -137,6 +137,10 @@ public class Parser {
 			return new AstLetBinding(type,
 					((TokenIdentifier) identifier).getValue(), definition, body);
 		}
+		if (match(TokenType.TOK_IDENTIFIER))
+		{
+			return new AstIdentifier(next());
+		}
 
 		throw error("pBaseExpr");
 	}

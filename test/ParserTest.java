@@ -82,10 +82,9 @@ public class ParserTest {
 		assertEquals(new AstExprBinOp(new AstExprInteger(42),
 				TokenType.TOK_LESS_THAN, new AstExprInteger(100)), ast);
 	}
-	
+
 	@Test
-	public void testTypeInt()
-	{
+	public void testTypeInt() {
 		Parser p = new Parser("Int");
 		AstType t = p.pType();
 		assertEquals(new AstTypeInt(), t);
@@ -95,7 +94,7 @@ public class ParserTest {
 	public void testLetBinding() {
 		Parser p = new Parser("let Bool foo = True in 5");
 		AstExpr e = p.pExpr();
-		assertEquals(new AstLetBinding(new AstTypeBool(), "foo", new AstExprBool(true),
-				new AstExprInteger(5)), e);
+		assertEquals(new AstLetBinding(new AstTypeBool(), "foo",
+				new AstExprBool(true), new AstExprInteger(5)), e);
 	}
 }

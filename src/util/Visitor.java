@@ -3,6 +3,7 @@ package util;
 import parser.AstExprBool;
 import parser.AstExprBinOp;
 import parser.AstExprInteger;
+import parser.AstIdentifier;
 import parser.AstLetBinding;
 import parser.AstTypeBool;
 import parser.AstTypeInt;
@@ -19,4 +20,6 @@ public interface Visitor {
 	public void visit(AstTypeInt astTypeInt);
 
 	public void visit(AstTypeBool astTypeBool);
+
+	public void visit(AstIdentifier astIdentifier);
 }

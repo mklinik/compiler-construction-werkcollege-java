@@ -6,6 +6,7 @@ import java.util.List;
 import parser.AstExprBinOp;
 import parser.AstExprBool;
 import parser.AstExprInteger;
+import parser.AstIdentifier;
 import parser.AstLetBinding;
 import parser.AstNode;
 import parser.AstTypeBool;
@@ -98,6 +99,12 @@ public class Typechecker implements Visitor {
 
 	@Override
 	public void visit(AstTypeBool astTypeBool) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visit(AstIdentifier astIdentifier) {
 		// TODO Auto-generated method stub
 		
 	}
