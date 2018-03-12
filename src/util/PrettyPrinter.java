@@ -5,6 +5,8 @@ import parser.AstExprBool;
 import parser.AstExprBinOp;
 import parser.AstExprInteger;
 import parser.AstLetBinding;
+import parser.AstTypeBool;
+import parser.AstTypeInt;
 
 public class PrettyPrinter implements Visitor {
 	StringBuilder result;
@@ -52,6 +54,18 @@ public class PrettyPrinter implements Visitor {
 
 	@Override
 	public void visit(AstLetBinding astLetBinding) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visit(AstTypeInt astTypeInt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visit(AstTypeBool astTypeBool) {
 		// TODO Auto-generated method stub
 		
 	}

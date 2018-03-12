@@ -39,15 +39,12 @@ public class Parser {
 	private boolean match(TokenType tok) {
 		return currentToken.getTokenType() == tok;
 	}
-	
+
 	// Helper function that throws a compile error when the token doesn't match
 	private Token mustMatch(TokenType tok, String location) {
-		if( currentToken.getTokenType() == tok )
-		{
+		if (currentToken.getTokenType() == tok) {
 			return currentToken;
-		}
-		else
-		{
+		} else {
 			throw error(location);
 		}
 	}
@@ -127,7 +124,9 @@ public class Parser {
 		}
 		if (match(TokenType.TOK_KW_LET)) {
 			next();
-			Token identifier = mustMatch(TokenType.TOK_IDENTIFIER, "let binding");
+			AstType type = pType();
+			Token identifier = mustMatch(TokenType.TOK_IDENTIFIER,
+					"let binding");
 			next();
 			mustMatch(TokenType.TOK_EQUALS, "let binding");
 			next();
@@ -135,10 +134,29 @@ public class Parser {
 			mustMatch(TokenType.TOK_KW_IN, "let binding");
 			next();
 			AstExpr body = pExpr();
-			return new AstLetBinding(((TokenIdentifier)identifier).getValue(), definition, body);
+			return new AstLetBinding(type,
+					((TokenIdentifier) identifier).getValue(), definition, body);
 		}
 
 		throw error("pBaseExpr");
+	}
+
+	// Only base types supported for now
+	public AstType pType() {
+		if (match(TokenType.TOK_IDENTIFIER)) {
+			String typ = ((TokenIdentifier)currentToken).getValue();
+			if( typ.equals("Int") )
+			{
+				next();
+				return new AstTypeInt();
+			}
+			if( typ.equals("Bool") )
+			{
+				next();
+				return new AstTypeBool();
+			}
+		}
+		throw error("pType");
 	}
 
 }

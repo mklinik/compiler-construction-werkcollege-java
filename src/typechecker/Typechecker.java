@@ -8,6 +8,8 @@ import parser.AstExprBool;
 import parser.AstExprInteger;
 import parser.AstLetBinding;
 import parser.AstNode;
+import parser.AstTypeBool;
+import parser.AstTypeInt;
 import util.CompileError;
 import util.Visitor;
 
@@ -84,6 +86,18 @@ public class Typechecker implements Visitor {
 
 	@Override
 	public void visit(AstLetBinding astLetBinding) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visit(AstTypeInt astTypeInt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visit(AstTypeBool astTypeBool) {
 		// TODO Auto-generated method stub
 		
 	}

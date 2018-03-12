@@ -1,14 +1,16 @@
 package parser;
+
 import util.Visitor;
 
-
 public class AstLetBinding extends AstExpr {
+	private final AstType type;
 	private final String identifier;
 	private final AstExpr definition;
 	private final AstExpr body;
 
-	public AstLetBinding(String identifier, AstExpr definition,
+	public AstLetBinding(AstType type, String identifier, AstExpr definition,
 			AstExpr body) {
+		this.type = type;
 		this.identifier = identifier;
 		this.definition = definition;
 		this.body = body;
@@ -28,6 +30,7 @@ public class AstLetBinding extends AstExpr {
 				+ ((definition == null) ? 0 : definition.hashCode());
 		result = prime * result
 				+ ((identifier == null) ? 0 : identifier.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -54,6 +57,11 @@ public class AstLetBinding extends AstExpr {
 			if (other.identifier != null)
 				return false;
 		} else if (!identifier.equals(other.identifier))
+			return false;
+		if (type == null) {
+			if (other.type != null)
+				return false;
+		} else if (!type.equals(other.type))
 			return false;
 		return true;
 	}
