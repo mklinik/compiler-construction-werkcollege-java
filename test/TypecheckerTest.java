@@ -65,24 +65,31 @@ public class TypecheckerTest {
 		assertTypecheckSuccess();
 		assertEquals(new TypeBool(), e.getType());
 	}
-	
+
 	@Test
 	public void testLetUnrelated() {
 		AstNode e = typecheckExpr("let Bool b = True in 5");
 		assertTypecheckSuccess();
 		assertEquals(new TypeInt(), e.getType());
 	}
-	
+
 	@Test
-	public void testLetBool(){
+	public void testLetBool() {
 		AstNode e = typecheckExpr("let Bool x = True in x");
 		assertTypecheckSuccess();
 		assertEquals(new TypeBool(), e.getType());
 	}
-	
+
 	@Test
-	public void testLetInt(){
+	public void testLetInt() {
 		AstNode e = typecheckExpr("let Int x = 10 in x + 1");
+		assertTypecheckSuccess();
+		assertEquals(new TypeInt(), e.getType());
+	}
+
+	@Test
+	public void testNestedLet() {
+		AstNode e = typecheckExpr("let Int x = 10 in let Int y = 20 in x + y");
 		assertTypecheckSuccess();
 		assertEquals(new TypeInt(), e.getType());
 	}
