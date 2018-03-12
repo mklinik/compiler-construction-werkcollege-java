@@ -6,6 +6,7 @@ import java.util.List;
 import parser.AstExprBinOp;
 import parser.AstExprBool;
 import parser.AstExprInteger;
+import parser.AstLetBinding;
 import parser.AstNode;
 import util.CompileError;
 import util.Visitor;
@@ -79,6 +80,12 @@ public class Typechecker implements Visitor {
 		errors = new LinkedList<>();
 		ast.accept(this);
 		return errors.isEmpty();
+	}
+
+	@Override
+	public void visit(AstLetBinding astLetBinding) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

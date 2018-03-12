@@ -2,6 +2,7 @@ package parser;
 
 import lexer.Lexer;
 import lexer.Token;
+import lexer.TokenIdentifier;
 import lexer.TokenType;
 
 public class Parser {
@@ -38,6 +39,18 @@ public class Parser {
 	private boolean match(TokenType tok) {
 		return currentToken.getTokenType() == tok;
 	}
+	
+	// Helper function that throws a compile error when the token doesn't match
+	private Token mustMatch(TokenType tok, String location) {
+		if( currentToken.getTokenType() == tok )
+		{
+			return currentToken;
+		}
+		else
+		{
+			throw error(location);
+		}
+	}
 
 	// Helper function to generate error messages
 	private Error error(String name) {
@@ -57,9 +70,8 @@ public class Parser {
 		AstExpr lhs = pExpr2();
 		return pExpr1_(lhs);
 	}
-	
-	public AstExpr pExpr1_(AstExpr lhs)
-	{
+
+	public AstExpr pExpr1_(AstExpr lhs) {
 		if (match(TokenType.TOK_LESS_THAN)) {
 			next();
 			AstExpr rhs = pExpr2();
@@ -69,7 +81,6 @@ public class Parser {
 		return lhs;
 	}
 
-	
 	public AstExpr pExpr2() {
 		AstExpr lhs = pExpr3();
 		return pExpr2_(lhs);
@@ -114,8 +125,20 @@ public class Parser {
 		if (match(TokenType.TOK_BOOL)) {
 			return new AstExprBool(next());
 		}
+		if (match(TokenType.TOK_KW_LET)) {
+			next();
+			Token identifier = mustMatch(TokenType.TOK_IDENTIFIER, "let binding");
+			next();
+			mustMatch(TokenType.TOK_EQUALS, "let binding");
+			next();
+			AstExpr definition = pExpr();
+			mustMatch(TokenType.TOK_KW_IN, "let binding");
+			next();
+			AstExpr body = pExpr();
+			return new AstLetBinding(((TokenIdentifier)identifier).getValue(), definition, body);
+		}
 
-		throw error("pFactor");
+		throw error("pBaseExpr");
 	}
 
 }
