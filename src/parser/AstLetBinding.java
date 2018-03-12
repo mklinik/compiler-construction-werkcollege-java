@@ -8,6 +8,22 @@ public class AstLetBinding extends AstExpr {
 	private final AstExpr definition;
 	private final AstExpr body;
 
+	public AstType getAstType() {
+		return type;
+	}
+
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public AstExpr getDefinition() {
+		return definition;
+	}
+
+	public AstExpr getBody() {
+		return body;
+	}
+
 	public AstLetBinding(AstType type, String identifier, AstExpr definition,
 			AstExpr body) {
 		this.type = type;

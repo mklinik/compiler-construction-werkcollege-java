@@ -1,5 +1,6 @@
 package typechecker;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class Typechecker implements Visitor {
 	// These are for convenience.
 	private static final Type typeInt = new TypeInt();
 	private static final Type typeBool = new TypeBool();
+	private HashMap<String, Type> env;
 
 	private List<CompileError> errors = null;
 
@@ -81,32 +83,40 @@ public class Typechecker implements Visitor {
 
 	public boolean typecheck(AstNode ast) {
 		errors = new LinkedList<>();
+		env = new HashMap<>();
 		ast.accept(this);
 		return errors.isEmpty();
 	}
 
 	@Override
 	public void visit(AstLetBinding astLetBinding) {
-		// TODO Auto-generated method stub
-		
+		// TODO: make a deep copy of the current environment and restore it at
+		// the end of the function! Otherwise the added definition will leak to
+		// outside the let binding.
+		astLetBinding.getAstType().accept(this);
+		env.put(astLetBinding.getIdentifier(), astLetBinding.getAstType().getType());
+		astLetBinding.getDefinition().accept(this);
+		if (!astLetBinding.getAstType().getType()
+				.equals(astLetBinding.getDefinition().getType())) {
+			error("let binding: specified type does not match actual type");
+		}
+		astLetBinding.getBody().accept(this);
+		astLetBinding.setType(astLetBinding.getBody().getType());
 	}
 
 	@Override
 	public void visit(AstTypeInt astTypeInt) {
-		// TODO Auto-generated method stub
-		
+		astTypeInt.setType(typeInt);
 	}
 
 	@Override
 	public void visit(AstTypeBool astTypeBool) {
-		// TODO Auto-generated method stub
-		
+		astTypeBool.setType(typeBool);
 	}
 
 	@Override
 	public void visit(AstIdentifier astIdentifier) {
-		// TODO Auto-generated method stub
-		
+		astIdentifier.setType(env.get(astIdentifier.getIdentifier()));
 	}
 
 }
