@@ -100,7 +100,7 @@ public class TypeInferenceTest {
 		assertEquals(new TypeFunction(new TypeVariable("a0"), new TypeFunction(
 				new TypeVariable("a1"), new TypeVariable("a0"))), e.getType());
 	}
-	
+
 	@Test
 	public void testAdditionFunction() {
 		AstNode e = typecheckExpr("fun x . fun y . x + y");

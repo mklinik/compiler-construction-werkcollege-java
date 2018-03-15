@@ -94,8 +94,7 @@ public class Typechecker implements Visitor {
 		// TODO: make a deep copy of the current environment and restore it at
 		// the end of the function! Otherwise the added definition will leak to
 		// outside the let binding.
-		if( astLetBinding.getAstType() == null )
-		{
+		if (astLetBinding.getAstType() == null) {
 			error("Typechecker: Function arguments must have types");
 		}
 		astLetBinding.getAstType().accept(this);

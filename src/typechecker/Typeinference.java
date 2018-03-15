@@ -58,19 +58,13 @@ public class Typeinference implements Visitor {
 			}
 			// base types always unify
 			return;
-		}
-		else if (left instanceof TypeVariable)
-		{
+		} else if (left instanceof TypeVariable) {
 			// TODO: occurs check
-			subst.put(((TypeVariable)left).getVariable(), right);
-		}
-		else if( right instanceof TypeVariable)
-		{
+			subst.put(((TypeVariable) left).getVariable(), right);
+		} else if (right instanceof TypeVariable) {
 			// TODO: occurs check
-			subst.put(((TypeVariable)right).getVariable(), left);
-		}
-		else
-		{
+			subst.put(((TypeVariable) right).getVariable(), left);
+		} else {
 			throw new Error("cannot unify types");
 		}
 	}

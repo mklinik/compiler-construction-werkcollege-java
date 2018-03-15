@@ -132,7 +132,7 @@ public class Parser {
 				next();
 				type = pType();
 			}
-			
+
 			mustMatch(TokenType.TOK_DOT, "lambda");
 			next();
 			AstExpr body = pExpr();
