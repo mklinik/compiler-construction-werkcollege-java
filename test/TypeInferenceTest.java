@@ -101,12 +101,12 @@ public class TypeInferenceTest {
 				new TypeVariable("a1"), new TypeVariable("a0"))), e.getType());
 	}
 	
-//	@Test
-//	public void testAdditionFunction() {
-//		AstNode e = typecheckExpr("fun x . fun y . x + y");
-//		assertTypecheckSuccess();
-//		assertEquals(new TypeFunction(new TypeInt(), new TypeFunction(
-//				new TypeInt(), new TypeInt())), e.getType());
-//	}
+	@Test
+	public void testAdditionFunction() {
+		AstNode e = typecheckExpr("fun x . fun y . x + y");
+		assertTypecheckSuccess();
+		assertEquals(new TypeFunction(new TypeInt(), new TypeFunction(
+				new TypeInt(), new TypeInt())), e.getType());
+	}
 
 }

@@ -54,11 +54,25 @@ public class Typeinference implements Visitor {
 						.applySubstitution(subst));
 				unify(l.getResultType().applySubstitution(subst), r
 						.getResultType().applySubstitution(subst));
+				return;
 			}
 			// base types always unify
 			return;
 		}
-		throw new Error("cannot unify types");
+		else if (left instanceof TypeVariable)
+		{
+			// TODO: occurs check
+			subst.put(((TypeVariable)left).getVariable(), right);
+		}
+		else if( right instanceof TypeVariable)
+		{
+			// TODO: occurs check
+			subst.put(((TypeVariable)right).getVariable(), left);
+		}
+		else
+		{
+			throw new Error("cannot unify types");
+		}
 	}
 
 	private String freshTypeVariable() {
