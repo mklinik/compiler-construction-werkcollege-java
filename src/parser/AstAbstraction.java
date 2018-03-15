@@ -5,7 +5,6 @@ import util.Visitor;
 public class AstAbstraction extends AstExpr {
 	private final AstType type;
 	private final String identifier;
-	private final AstExpr definition;
 	private final AstExpr body;
 
 	public AstType getAstType() {
@@ -16,19 +15,13 @@ public class AstAbstraction extends AstExpr {
 		return identifier;
 	}
 
-	public AstExpr getDefinition() {
-		return definition;
-	}
-
 	public AstExpr getBody() {
 		return body;
 	}
 
-	public AstAbstraction(AstType type, String identifier, AstExpr definition,
-			AstExpr body) {
+	public AstAbstraction(AstType type, String identifier, AstExpr body) {
 		this.type = type;
 		this.identifier = identifier;
-		this.definition = definition;
 		this.body = body;
 	}
 
@@ -42,8 +35,6 @@ public class AstAbstraction extends AstExpr {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((body == null) ? 0 : body.hashCode());
-		result = prime * result
-				+ ((definition == null) ? 0 : definition.hashCode());
 		result = prime * result
 				+ ((identifier == null) ? 0 : identifier.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
@@ -63,11 +54,6 @@ public class AstAbstraction extends AstExpr {
 			if (other.body != null)
 				return false;
 		} else if (!body.equals(other.body))
-			return false;
-		if (definition == null) {
-			if (other.definition != null)
-				return false;
-		} else if (!definition.equals(other.definition))
 			return false;
 		if (identifier == null) {
 			if (other.identifier != null)

@@ -128,14 +128,11 @@ public class Parser {
 			Token identifier = mustMatch(TokenType.TOK_IDENTIFIER,
 					"let binding");
 			next();
-			mustMatch(TokenType.TOK_EQUALS, "let binding");
-			next();
-			AstExpr definition = pExpr();
 			mustMatch(TokenType.TOK_KW_IN, "let binding");
 			next();
 			AstExpr body = pExpr();
 			return new AstAbstraction(type,
-					((TokenIdentifier) identifier).getValue(), definition, body);
+					((TokenIdentifier) identifier).getValue(), body);
 		}
 		if (match(TokenType.TOK_IDENTIFIER))
 		{

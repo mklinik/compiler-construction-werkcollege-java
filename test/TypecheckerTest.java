@@ -7,6 +7,7 @@ import parser.AstExpr;
 import parser.AstNode;
 import parser.Parser;
 import typechecker.TypeBool;
+import typechecker.TypeFunction;
 import typechecker.TypeInt;
 import typechecker.Typechecker;
 
@@ -68,30 +69,30 @@ public class TypecheckerTest {
 
 	@Test
 	public void testLetUnrelated() {
-		AstNode e = typecheckExpr("let Bool b = True in 5");
+		AstNode e = typecheckExpr("let Bool b in 5");
 		assertTypecheckSuccess();
-		assertEquals(new TypeInt(), e.getType());
+		assertEquals(new TypeFunction(new TypeBool(), new TypeInt()), e.getType());
 	}
 
 	@Test
-	public void testLetBool() {
-		AstNode e = typecheckExpr("let Bool x = True in x");
+	public void testLambdaBool() {
+		AstNode e = typecheckExpr("let Bool x in x");
 		assertTypecheckSuccess();
-		assertEquals(new TypeBool(), e.getType());
+		assertEquals(new TypeFunction(new TypeBool(), new TypeBool()), e.getType());
 	}
 
 	@Test
 	public void testLetInt() {
-		AstNode e = typecheckExpr("let Int x = 10 in x + 1");
+		AstNode e = typecheckExpr("let Int x in x + 1");
 		assertTypecheckSuccess();
-		assertEquals(new TypeInt(), e.getType());
+		assertEquals(new TypeFunction(new TypeInt(), new TypeInt()), e.getType());
 	}
 
 	@Test
 	public void testNestedLet() {
-		AstNode e = typecheckExpr("let Int x = 10 in let Int y = 20 in x + y");
+		AstNode e = typecheckExpr("let Int x in let Int y in x + y");
 		assertTypecheckSuccess();
-		assertEquals(new TypeInt(), e.getType());
+		assertEquals(new TypeFunction(new TypeInt(), new TypeFunction(new TypeInt(), new TypeInt())), e.getType());
 	}
 
 }

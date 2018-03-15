@@ -7,6 +7,7 @@ import parser.AstExprInteger;
 import parser.AstIdentifier;
 import parser.AstAbstraction;
 import parser.AstTypeBool;
+import parser.AstTypeFunction;
 import parser.AstTypeInt;
 
 public class PrettyPrinter implements Visitor {
@@ -73,6 +74,12 @@ public class PrettyPrinter implements Visitor {
 
 	@Override
 	public void visit(AstIdentifier astIdentifier) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visit(AstTypeFunction astTypeFunction) {
 		// TODO Auto-generated method stub
 		
 	}

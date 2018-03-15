@@ -11,6 +11,7 @@ import parser.AstIdentifier;
 import parser.AstAbstraction;
 import parser.AstNode;
 import parser.AstTypeBool;
+import parser.AstTypeFunction;
 import parser.AstTypeInt;
 import util.CompileError;
 import util.Visitor;
@@ -94,14 +95,10 @@ public class Typechecker implements Visitor {
 		// the end of the function! Otherwise the added definition will leak to
 		// outside the let binding.
 		astLetBinding.getAstType().accept(this);
-		env.put(astLetBinding.getIdentifier(), astLetBinding.getAstType().getType());
-		astLetBinding.getDefinition().accept(this);
-		if (!astLetBinding.getAstType().getType()
-				.equals(astLetBinding.getDefinition().getType())) {
-			error("let binding: specified type does not match actual type");
-		}
+		env.put(astLetBinding.getIdentifier(), astLetBinding.getAstType()
+				.getType());
 		astLetBinding.getBody().accept(this);
-		astLetBinding.setType(astLetBinding.getBody().getType());
+		astLetBinding.setType(new TypeFunction(astLetBinding.getAstType().getType(), astLetBinding.getBody().getType()));
 	}
 
 	@Override
@@ -117,6 +114,12 @@ public class Typechecker implements Visitor {
 	@Override
 	public void visit(AstIdentifier astIdentifier) {
 		astIdentifier.setType(env.get(astIdentifier.getIdentifier()));
+	}
+
+	@Override
+	public void visit(AstTypeFunction astTypeFunction) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

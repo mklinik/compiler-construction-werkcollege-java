@@ -6,6 +6,7 @@ import parser.AstExprInteger;
 import parser.AstIdentifier;
 import parser.AstAbstraction;
 import parser.AstTypeBool;
+import parser.AstTypeFunction;
 import parser.AstTypeInt;
 
 public interface Visitor {
@@ -22,4 +23,6 @@ public interface Visitor {
 	public void visit(AstTypeBool astTypeBool);
 
 	public void visit(AstIdentifier astIdentifier);
+
+	public void visit(AstTypeFunction astTypeFunction);
 }
