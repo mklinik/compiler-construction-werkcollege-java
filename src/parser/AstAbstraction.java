@@ -2,7 +2,7 @@ package parser;
 
 import util.Visitor;
 
-public class AstLetBinding extends AstExpr {
+public class AstAbstraction extends AstExpr {
 	private final AstType type;
 	private final String identifier;
 	private final AstExpr definition;
@@ -24,7 +24,7 @@ public class AstLetBinding extends AstExpr {
 		return body;
 	}
 
-	public AstLetBinding(AstType type, String identifier, AstExpr definition,
+	public AstAbstraction(AstType type, String identifier, AstExpr definition,
 			AstExpr body) {
 		this.type = type;
 		this.identifier = identifier;
@@ -58,7 +58,7 @@ public class AstLetBinding extends AstExpr {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AstLetBinding other = (AstLetBinding) obj;
+		AstAbstraction other = (AstAbstraction) obj;
 		if (body == null) {
 			if (other.body != null)
 				return false;

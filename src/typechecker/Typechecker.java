@@ -8,7 +8,7 @@ import parser.AstExprBinOp;
 import parser.AstExprBool;
 import parser.AstExprInteger;
 import parser.AstIdentifier;
-import parser.AstLetBinding;
+import parser.AstAbstraction;
 import parser.AstNode;
 import parser.AstTypeBool;
 import parser.AstTypeInt;
@@ -89,7 +89,7 @@ public class Typechecker implements Visitor {
 	}
 
 	@Override
-	public void visit(AstLetBinding astLetBinding) {
+	public void visit(AstAbstraction astLetBinding) {
 		// TODO: make a deep copy of the current environment and restore it at
 		// the end of the function! Otherwise the added definition will leak to
 		// outside the let binding.

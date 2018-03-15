@@ -4,7 +4,7 @@ import parser.AstExprBool;
 import parser.AstExprBinOp;
 import parser.AstExprInteger;
 import parser.AstIdentifier;
-import parser.AstLetBinding;
+import parser.AstAbstraction;
 import parser.AstTypeBool;
 import parser.AstTypeInt;
 
@@ -15,7 +15,7 @@ public interface Visitor {
 
 	public void visit(AstExprBool astBool);
 
-	public void visit(AstLetBinding astLetBinding);
+	public void visit(AstAbstraction astLetBinding);
 
 	public void visit(AstTypeInt astTypeInt);
 

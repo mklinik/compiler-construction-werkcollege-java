@@ -5,7 +5,7 @@ import parser.AstExprBool;
 import parser.AstExprBinOp;
 import parser.AstExprInteger;
 import parser.AstIdentifier;
-import parser.AstLetBinding;
+import parser.AstAbstraction;
 import parser.AstTypeBool;
 import parser.AstTypeInt;
 
@@ -54,7 +54,7 @@ public class PrettyPrinter implements Visitor {
 	}
 
 	@Override
-	public void visit(AstLetBinding astLetBinding) {
+	public void visit(AstAbstraction astLetBinding) {
 		// TODO Auto-generated method stub
 		
 	}

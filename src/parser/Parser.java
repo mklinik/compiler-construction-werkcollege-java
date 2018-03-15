@@ -134,7 +134,7 @@ public class Parser {
 			mustMatch(TokenType.TOK_KW_IN, "let binding");
 			next();
 			AstExpr body = pExpr();
-			return new AstLetBinding(type,
+			return new AstAbstraction(type,
 					((TokenIdentifier) identifier).getValue(), definition, body);
 		}
 		if (match(TokenType.TOK_IDENTIFIER))
