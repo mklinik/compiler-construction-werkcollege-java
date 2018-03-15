@@ -57,30 +57,30 @@ public class PrettyPrinter implements Visitor {
 	@Override
 	public void visit(AstAbstraction astLetBinding) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void visit(AstTypeInt astTypeInt) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void visit(AstTypeBool astTypeBool) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void visit(AstIdentifier astIdentifier) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void visit(AstTypeFunction astTypeFunction) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

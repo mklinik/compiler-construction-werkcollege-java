@@ -125,8 +125,7 @@ public class Parser {
 		if (match(TokenType.TOK_LAMBDA)) {
 			next();
 			AstType type = pType();
-			Token identifier = mustMatch(TokenType.TOK_IDENTIFIER,
-					"lambda");
+			Token identifier = mustMatch(TokenType.TOK_IDENTIFIER, "lambda");
 			next();
 			mustMatch(TokenType.TOK_DOT, "lambda");
 			next();
@@ -134,8 +133,7 @@ public class Parser {
 			return new AstAbstraction(type,
 					((TokenIdentifier) identifier).getValue(), body);
 		}
-		if (match(TokenType.TOK_IDENTIFIER))
-		{
+		if (match(TokenType.TOK_IDENTIFIER)) {
 			return new AstIdentifier(next());
 		}
 
@@ -145,14 +143,12 @@ public class Parser {
 	// Only base types supported for now
 	public AstType pType() {
 		if (match(TokenType.TOK_IDENTIFIER)) {
-			String typ = ((TokenIdentifier)currentToken).getValue();
-			if( typ.equals("Int") )
-			{
+			String typ = ((TokenIdentifier) currentToken).getValue();
+			if (typ.equals("Int")) {
 				next();
 				return new AstTypeInt();
 			}
-			if( typ.equals("Bool") )
-			{
+			if (typ.equals("Bool")) {
 				next();
 				return new AstTypeBool();
 			}

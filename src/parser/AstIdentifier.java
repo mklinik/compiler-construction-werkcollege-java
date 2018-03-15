@@ -6,9 +6,9 @@ import util.Visitor;
 
 public class AstIdentifier extends AstExpr {
 	private final String identifier;
-	
+
 	public AstIdentifier(Token token) {
-		this.identifier = ((TokenIdentifier)token).getValue();
+		this.identifier = ((TokenIdentifier) token).getValue();
 	}
 
 	@Override

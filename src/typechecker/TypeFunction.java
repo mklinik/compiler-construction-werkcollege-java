@@ -3,7 +3,7 @@ package typechecker;
 public class TypeFunction implements Type {
 	private final Type argType;
 	private final Type resultType;
-	
+
 	public Type getArgType() {
 		return argType;
 	}
@@ -12,8 +12,7 @@ public class TypeFunction implements Type {
 		return resultType;
 	}
 
-	public TypeFunction(Type argType, Type resultType)
-	{
+	public TypeFunction(Type argType, Type resultType) {
 		this.argType = argType;
 		this.resultType = resultType;
 	}

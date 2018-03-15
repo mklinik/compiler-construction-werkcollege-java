@@ -8,7 +8,7 @@ public class AstTypeInt extends AstType {
 	public void accept(Visitor v) {
 		v.visit(this);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

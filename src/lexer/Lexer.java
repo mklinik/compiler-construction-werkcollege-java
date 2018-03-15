@@ -63,7 +63,7 @@ public class Lexer {
 			currentPosition++;
 			return new Token(TokenType.TOK_EQUALS);
 		}
-		
+
 		if (match('.')) {
 			currentPosition++;
 			return new Token(TokenType.TOK_DOT);
@@ -117,7 +117,6 @@ public class Lexer {
 		if (result.equals("let")) {
 			return new Token(TokenType.TOK_KW_LET);
 		}
-		
 
 		if (result.equals("fun")) {
 			return new Token(TokenType.TOK_LAMBDA);

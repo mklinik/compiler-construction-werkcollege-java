@@ -98,7 +98,8 @@ public class Typechecker implements Visitor {
 		env.put(astLetBinding.getIdentifier(), astLetBinding.getAstType()
 				.getType());
 		astLetBinding.getBody().accept(this);
-		astLetBinding.setType(new TypeFunction(astLetBinding.getAstType().getType(), astLetBinding.getBody().getType()));
+		astLetBinding.setType(new TypeFunction(astLetBinding.getAstType()
+				.getType(), astLetBinding.getBody().getType()));
 	}
 
 	@Override
