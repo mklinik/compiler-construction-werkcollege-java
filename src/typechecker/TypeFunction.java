@@ -1,8 +1,10 @@
 package typechecker;
 
+import java.util.HashMap;
+
 public class TypeFunction implements Type {
-	private final Type argType;
-	private final Type resultType;
+	private Type argType;
+	private Type resultType;
 
 	public Type getArgType() {
 		return argType;
@@ -47,6 +49,13 @@ public class TypeFunction implements Type {
 		} else if (!resultType.equals(other.resultType))
 			return false;
 		return true;
+	}
+
+	@Override
+	public Type applySubstitution(HashMap<String, Type> substitution) {
+		this.argType = this.argType.applySubstitution(substitution);
+		this.resultType = this.resultType.applySubstitution(substitution);
+		return this;
 	}
 
 }

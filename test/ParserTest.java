@@ -4,7 +4,6 @@ import lexer.TokenType;
 import org.junit.Test;
 
 import parser.*;
-import typechecker.TypeBool;
 
 public class ParserTest {
 

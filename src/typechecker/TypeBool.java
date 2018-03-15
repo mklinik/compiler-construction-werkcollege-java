@@ -1,5 +1,7 @@
 package typechecker;
 
+import java.util.HashMap;
+
 public class TypeBool implements Type {
 	@Override
 	public boolean equals(Object obj) {
@@ -10,5 +12,10 @@ public class TypeBool implements Type {
 		if (getClass() != obj.getClass())
 			return false;
 		return true;
+	}
+
+	@Override
+	public Type applySubstitution(HashMap<String, Type> substitution) {
+		return this;
 	}
 }
