@@ -69,6 +69,11 @@ public class Lexer {
 			return new Token(TokenType.TOK_DOT);
 		}
 
+		if (match(':')) {
+			currentPosition++;
+			return new Token(TokenType.TOK_COLON);
+		}
+
 		if (Character.isAlphabetic(input.charAt(currentPosition))) {
 			return lexIdentifier();
 		}
