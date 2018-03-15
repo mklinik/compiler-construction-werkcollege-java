@@ -92,7 +92,7 @@ public class ParserTest {
 
 	@Test
 	public void testLetBinding() {
-		Parser p = new Parser("let Bool foo in 5");
+		Parser p = new Parser("fun Bool foo . 5");
 		AstExpr e = p.pExpr();
 		assertEquals(new AstAbstraction(new AstTypeBool(), "foo",
 				new AstExprInteger(5)), e);

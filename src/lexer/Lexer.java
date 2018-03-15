@@ -63,6 +63,11 @@ public class Lexer {
 			currentPosition++;
 			return new Token(TokenType.TOK_EQUALS);
 		}
+		
+		if (match('.')) {
+			currentPosition++;
+			return new Token(TokenType.TOK_DOT);
+		}
 
 		if (Character.isAlphabetic(input.charAt(currentPosition))) {
 			return lexIdentifier();
@@ -111,6 +116,11 @@ public class Lexer {
 
 		if (result.equals("let")) {
 			return new Token(TokenType.TOK_KW_LET);
+		}
+		
+
+		if (result.equals("fun")) {
+			return new Token(TokenType.TOK_LAMBDA);
 		}
 
 		if (result.equals("in")) {

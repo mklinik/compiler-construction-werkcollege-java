@@ -122,13 +122,13 @@ public class Parser {
 		if (match(TokenType.TOK_BOOL)) {
 			return new AstExprBool(next());
 		}
-		if (match(TokenType.TOK_KW_LET)) {
+		if (match(TokenType.TOK_LAMBDA)) {
 			next();
 			AstType type = pType();
 			Token identifier = mustMatch(TokenType.TOK_IDENTIFIER,
-					"let binding");
+					"lambda");
 			next();
-			mustMatch(TokenType.TOK_KW_IN, "let binding");
+			mustMatch(TokenType.TOK_DOT, "lambda");
 			next();
 			AstExpr body = pExpr();
 			return new AstAbstraction(type,
