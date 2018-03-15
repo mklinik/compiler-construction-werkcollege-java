@@ -21,6 +21,7 @@ public class Typeinference implements Visitor {
 	private static final Type typeInt = new TypeInt();
 	private static final Type typeBool = new TypeBool();
 
+	private int nextTypeVariable;
 	private HashMap<String, Type> env;
 	private HashMap<String, Type> subst;
 
@@ -58,6 +59,10 @@ public class Typeinference implements Visitor {
 			return;
 		}
 		throw new Error("cannot unify types");
+	}
+
+	private String freshTypeVariable() {
+		return "a" + nextTypeVariable++;
 	}
 
 	@Override
@@ -105,7 +110,12 @@ public class Typeinference implements Visitor {
 	}
 
 	@Override
-	public void visit(AstAbstraction astLetBinding) {
+	public void visit(AstAbstraction e) {
+		Type tvar = new TypeVariable(freshTypeVariable());
+		env.put(e.getIdentifier(), tvar);
+		e.getBody().accept(this);
+		e.setType(new TypeFunction(tvar.applySubstitution(subst), e.getBody()
+				.getType().applySubstitution(subst)));
 	}
 
 	@Override
@@ -120,9 +130,8 @@ public class Typeinference implements Visitor {
 	}
 
 	@Override
-	public void visit(AstIdentifier astIdentifier) {
-		// TODO Auto-generated method stub
-
+	public void visit(AstIdentifier e) {
+		e.setType(env.get(e.getIdentifier()));
 	}
 
 	@Override
@@ -134,7 +143,8 @@ public class Typeinference implements Visitor {
 	public boolean typeinference(AstExpr ast) {
 		errors = new LinkedList<>();
 		env = new HashMap<>();
-		env = new HashMap<>();
+		subst = new HashMap<>();
+		nextTypeVariable = 0;
 		ast.accept(this);
 		return errors.isEmpty();
 	}

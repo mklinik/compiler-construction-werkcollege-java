@@ -126,9 +126,13 @@ public class Parser {
 			next();
 			Token identifier = mustMatch(TokenType.TOK_IDENTIFIER, "lambda");
 			next();
-			mustMatch(TokenType.TOK_COLON, "lambda");
-			next();
-			AstType type = pType();
+
+			AstType type = null;
+			if (match(TokenType.TOK_COLON)) {
+				next();
+				type = pType();
+			}
+			
 			mustMatch(TokenType.TOK_DOT, "lambda");
 			next();
 			AstExpr body = pExpr();
