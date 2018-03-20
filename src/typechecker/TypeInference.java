@@ -16,7 +16,7 @@ import parser.AstTypeInt;
 import util.CompileError;
 import util.Visitor;
 
-public class Typeinference implements Visitor {
+public class TypeInference implements Visitor {
 	// These are for convenience.
 	private static final Type typeInt = new TypeInt();
 	private static final Type typeBool = new TypeBool();
@@ -125,7 +125,7 @@ public class Typeinference implements Visitor {
 
 	}
 
-	public Typeinference(AstExpr ast) {
+	public TypeInference(AstExpr ast) {
 		this.env = new HashMap<>();
 		this.expectedType = new TypeVariable(freshTypeVariable());
 		this.result = new Substitution();

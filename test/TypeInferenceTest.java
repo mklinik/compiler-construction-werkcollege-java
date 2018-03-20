@@ -15,15 +15,15 @@ import typechecker.TypeBool;
 import typechecker.TypeFunction;
 import typechecker.TypeInt;
 import typechecker.TypeVariable;
-import typechecker.Typeinference;
+import typechecker.TypeInference;
 
 public class TypeInferenceTest {
 
-	private void assertTypecheckSuccess(Typeinference tc) {
+	private void assertTypecheckSuccess(TypeInference tc) {
 		assertTrue(tc.getAllErrors(), tc.getAllErrors().length() == 0);
 	}
 
-	private void assertTypecheckFailure(Typeinference tc, String message) {
+	private void assertTypecheckFailure(TypeInference tc, String message) {
 		assertEquals(message, tc.getAllErrors());
 	}
 
@@ -40,7 +40,7 @@ public class TypeInferenceTest {
 		Type t1 = new TypeFunction(new TypeFunction(new TypeVariable("a"), new TypeInt()), new TypeVariable("a"));
 		Type t2 = new TypeFunction(new TypeFunction(new TypeBool(), new TypeInt()), new TypeInt());
 		try{
-			Typeinference.unify(t1, t2);
+			TypeInference.unify(t1, t2);
 			assertTrue("unify must throw an exception", false);
 		}
 		catch(Error e)
@@ -55,7 +55,7 @@ public class TypeInferenceTest {
 		// Same as before, but now two different type variables make unification succeed
 		Type t1 = new TypeFunction(new TypeFunction(new TypeVariable("a"), new TypeInt()), new TypeVariable("b"));
 		Type t2 = new TypeFunction(new TypeFunction(new TypeBool(), new TypeInt()), new TypeInt());
-		Substitution s = Typeinference.unify(t1, t2);
+		Substitution s = TypeInference.unify(t1, t2);
 		assertTrue("must have found a", s.containsKey("a"));
 		assertTrue("must have found b", s.containsKey("b"));
 		assertEquals(new TypeBool(), s.get("a"));
@@ -91,7 +91,7 @@ public class TypeInferenceTest {
 	@Test
 	public void testIntegerConstant() {
 		AstExpr e = parseExpr("5");
-		Typeinference tc = new Typeinference(e);
+		TypeInference tc = new TypeInference(e);
 		assertTypecheckSuccess(tc);
 		assertEquals(new TypeInt(), e.getType());
 	}
