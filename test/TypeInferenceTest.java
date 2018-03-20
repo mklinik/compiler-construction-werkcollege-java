@@ -1,21 +1,17 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
-
-import org.junit.Before;
 import org.junit.Test;
 
 import parser.AstExpr;
-import parser.AstNode;
 import parser.Parser;
 import typechecker.Substitution;
 import typechecker.Type;
 import typechecker.TypeBool;
 import typechecker.TypeFunction;
+import typechecker.TypeInference;
 import typechecker.TypeInt;
 import typechecker.TypeVariable;
-import typechecker.TypeInference;
 
 public class TypeInferenceTest {
 
@@ -96,42 +92,31 @@ public class TypeInferenceTest {
 		assertTypecheckSuccess(tc);
 		assertEquals(new TypeInt(), e.getType());
 	}
-/*
+
 	@Test
 	public void testPlusWithConstants() {
-		AstNode e = typecheckExpr("5 + 3");
-		assertTypecheckSuccess();
+		AstExpr e = parseExpr("5 + 3");
+		TypeInference tc = new TypeInference(e);
+		assertTypecheckSuccess(tc);
 		assertEquals(new TypeInt(), e.getType());
 	}
-
-	@Test
-	public void testPlusWithTypeError() {
-		typecheckExpr("5 + True");
-		assertTypecheckFailure("cannot unify types\n");
-	}
-
-	@Test
-	public void testIdentityFunction() {
-		AstNode e = typecheckExpr("fun x . x");
-		assertTypecheckSuccess();
-		assertEquals(new TypeFunction(new TypeVariable("a0"), new TypeVariable(
-				"a0")), e.getType());
-	}
-
-	@Test
-	public void testConstantFunction() {
-		AstNode e = typecheckExpr("fun x . fun y . x");
-		assertTypecheckSuccess();
-		assertEquals(new TypeFunction(new TypeVariable("a0"), new TypeFunction(
-				new TypeVariable("a1"), new TypeVariable("a0"))), e.getType());
-	}
-
-	@Test
-	public void testAdditionFunction() {
-		AstNode e = typecheckExpr("fun x . fun y . x + y");
-		assertTypecheckSuccess();
-		assertEquals(new TypeFunction(new TypeInt(), new TypeFunction(
-				new TypeInt(), new TypeInt())), e.getType());
-	}
-*/
+	/*
+	 * @Test public void testPlusWithTypeError() { typecheckExpr("5 + True");
+	 * assertTypecheckFailure("cannot unify types\n"); }
+	 * 
+	 * @Test public void testIdentityFunction() { AstNode e =
+	 * typecheckExpr("fun x . x"); assertTypecheckSuccess(); assertEquals(new
+	 * TypeFunction(new TypeVariable("a0"), new TypeVariable( "a0")),
+	 * e.getType()); }
+	 * 
+	 * @Test public void testConstantFunction() { AstNode e =
+	 * typecheckExpr("fun x . fun y . x"); assertTypecheckSuccess();
+	 * assertEquals(new TypeFunction(new TypeVariable("a0"), new TypeFunction(
+	 * new TypeVariable("a1"), new TypeVariable("a0"))), e.getType()); }
+	 * 
+	 * @Test public void testAdditionFunction() { AstNode e =
+	 * typecheckExpr("fun x . fun y . x + y"); assertTypecheckSuccess();
+	 * assertEquals(new TypeFunction(new TypeInt(), new TypeFunction( new
+	 * TypeInt(), new TypeInt())), e.getType()); }
+	 */
 }

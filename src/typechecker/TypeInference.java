@@ -1,6 +1,5 @@
 package typechecker;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class TypeInference implements Visitor {
 	private int nextTypeVariable;
 
 	// input parameters
-	private HashMap<String, Type> env;
+	private Environment env;
 	private Type expectedType;
 
 	// result
@@ -92,10 +91,32 @@ public class TypeInference implements Visitor {
 
 	@Override
 	public void visit(AstExprBinOp e) {
-	}
+		switch (e.getOperator()) {
+		case TOK_PLUS:
+		case TOK_MINUS:
+			Type expectedResultType = expectedType;
+			
+			expectedType = typeInt;
+			e.getLeft().accept(this);
+			
+			env.applySubstitution(result);
+			expectedType = typeInt;
+			e.getRight().accept(this);
+			
+			result.putAll(unify(expectedResultType.applySubstitution(result), typeInt));
+			e.setType(expectedResultType.applySubstitution(result));
+			break;
 
-	// algorithm W takes: environment, expression and returns: substitution and
-	// type such that type.applySubst(subst) is the type of the expression
+		case TOK_LESS_THAN:
+			error("Typeinference: <= not implemented");
+			break;
+
+		default:
+			error("Typecheinference: Unknown operator " + e.getOperator());
+			break;
+		}
+
+	}
 
 	@Override
 	public void visit(AstExprBool astBool) {
@@ -128,11 +149,15 @@ public class TypeInference implements Visitor {
 	}
 
 	public TypeInference(AstExpr ast) {
-		this.env = new HashMap<>();
+		this.env = new Environment();
 		this.expectedType = new TypeVariable(freshTypeVariable());
 		this.result = new Substitution();
 		errors = new LinkedList<>();
 		nextTypeVariable = 0;
-		ast.accept(this);
+		try {
+			ast.accept(this);
+		} catch (Error e) {
+			error(e.getMessage());
+		}
 	}
 }
