@@ -95,15 +95,16 @@ public class TypeInference implements Visitor {
 		case TOK_PLUS:
 		case TOK_MINUS:
 			Type expectedResultType = expectedType;
-			
+
 			expectedType = typeInt;
 			e.getLeft().accept(this);
-			
+
 			env.applySubstitution(result);
 			expectedType = typeInt;
 			e.getRight().accept(this);
-			
-			result.putAll(unify(expectedResultType.applySubstitution(result), typeInt));
+
+			result.putAll(unify(expectedResultType.applySubstitution(result),
+					typeInt));
 			e.setType(expectedResultType.applySubstitution(result));
 			break;
 
@@ -119,7 +120,9 @@ public class TypeInference implements Visitor {
 	}
 
 	@Override
-	public void visit(AstExprBool astBool) {
+	public void visit(AstExprBool e) {
+		result.putAll(unify(expectedType, typeBool));
+		e.setType(expectedType.applySubstitution(result));
 	}
 
 	@Override
@@ -149,11 +152,11 @@ public class TypeInference implements Visitor {
 	}
 
 	public TypeInference(AstExpr ast) {
+		nextTypeVariable = 0;
 		this.env = new Environment();
 		this.expectedType = new TypeVariable(freshTypeVariable());
 		this.result = new Substitution();
 		errors = new LinkedList<>();
-		nextTypeVariable = 0;
 		try {
 			ast.accept(this);
 		} catch (Error e) {
