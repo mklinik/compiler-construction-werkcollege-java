@@ -1,6 +1,5 @@
 package typechecker;
 
-
 public class TypeInt implements Type {
 	@Override
 	public boolean equals(Object obj) {

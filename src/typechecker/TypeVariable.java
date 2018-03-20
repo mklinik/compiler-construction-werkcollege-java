@@ -1,6 +1,5 @@
 package typechecker;
 
-
 public class TypeVariable implements Type {
 	private String variable;
 

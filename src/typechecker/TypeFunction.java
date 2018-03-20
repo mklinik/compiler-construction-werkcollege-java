@@ -1,6 +1,5 @@
 package typechecker;
 
-
 public class TypeFunction implements Type {
 	private Type argType;
 	private Type resultType;

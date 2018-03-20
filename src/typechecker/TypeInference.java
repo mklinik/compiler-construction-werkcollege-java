@@ -22,11 +22,11 @@ public class TypeInference implements Visitor {
 	private static final Type typeBool = new TypeBool();
 
 	private int nextTypeVariable;
-	
+
 	// input parameters
 	private HashMap<String, Type> env;
 	private Type expectedType;
-	
+
 	// result
 	private Substitution result;
 
@@ -56,7 +56,9 @@ public class TypeInference implements Visitor {
 				TypeFunction l = (TypeFunction) left;
 				TypeFunction r = (TypeFunction) right;
 				Substitution s1 = unify(l.getArgType(), r.getArgType());
-				Substitution s2 = unify(l.getResultType().applySubstitution(s1), r.getResultType().applySubstitution(s1));
+				Substitution s2 = unify(
+						l.getResultType().applySubstitution(s1), r
+								.getResultType().applySubstitution(s1));
 				s1.combine(s2);
 				return s1;
 			} else {

@@ -32,29 +32,30 @@ public class TypeInferenceTest {
 		AstExpr expr = p.pExpr();
 		return expr;
 	}
-	
+
 	@Test
-	public void testUnificationFails()
-	{
+	public void testUnificationFails() {
 		// Example from the slides where unification fails
-		Type t1 = new TypeFunction(new TypeFunction(new TypeVariable("a"), new TypeInt()), new TypeVariable("a"));
-		Type t2 = new TypeFunction(new TypeFunction(new TypeBool(), new TypeInt()), new TypeInt());
-		try{
+		Type t1 = new TypeFunction(new TypeFunction(new TypeVariable("a"),
+				new TypeInt()), new TypeVariable("a"));
+		Type t2 = new TypeFunction(new TypeFunction(new TypeBool(),
+				new TypeInt()), new TypeInt());
+		try {
 			TypeInference.unify(t1, t2);
 			assertTrue("unify must throw an exception", false);
-		}
-		catch(Error e)
-		{
+		} catch (Error e) {
 			assertEquals("cannot unify types", e.getMessage());
 		}
 	}
-	
+
 	@Test
-	public void testUnificationSucceeds()
-	{
-		// Same as before, but now two different type variables make unification succeed
-		Type t1 = new TypeFunction(new TypeFunction(new TypeVariable("a"), new TypeInt()), new TypeVariable("b"));
-		Type t2 = new TypeFunction(new TypeFunction(new TypeBool(), new TypeInt()), new TypeInt());
+	public void testUnificationSucceeds() {
+		// Same as before, but now two different type variables make unification
+		// succeed
+		Type t1 = new TypeFunction(new TypeFunction(new TypeVariable("a"),
+				new TypeInt()), new TypeVariable("b"));
+		Type t2 = new TypeFunction(new TypeFunction(new TypeBool(),
+				new TypeInt()), new TypeInt());
 		Substitution s = TypeInference.unify(t1, t2);
 		assertTrue("must have found a", s.containsKey("a"));
 		assertTrue("must have found b", s.containsKey("b"));
