@@ -22,7 +22,13 @@ public class Typeinference implements Visitor {
 	private static final Type typeBool = new TypeBool();
 
 	private int nextTypeVariable;
+	
+	// input parameters
 	private HashMap<String, Type> env;
+	private Type expectedType;
+	
+	// result
+	private Substitution result;
 
 	private List<CompileError> errors = null;
 
@@ -78,6 +84,8 @@ public class Typeinference implements Visitor {
 
 	@Override
 	public void visit(AstExprInteger i) {
+		result.putAll(unify(expectedType, typeInt));
+		i.setType(expectedType.applySubstitution(result));
 	}
 
 	@Override
@@ -117,12 +125,12 @@ public class Typeinference implements Visitor {
 
 	}
 
-	public boolean typeinference(AstExpr ast) {
+	public Typeinference(AstExpr ast) {
+		this.env = new HashMap<>();
+		this.expectedType = new TypeVariable(freshTypeVariable());
+		this.result = new Substitution();
 		errors = new LinkedList<>();
-		env = new HashMap<>();
 		nextTypeVariable = 0;
 		ast.accept(this);
-		return errors.isEmpty();
 	}
-
 }
