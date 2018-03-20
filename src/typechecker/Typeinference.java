@@ -23,7 +23,6 @@ public class Typeinference implements Visitor {
 
 	private int nextTypeVariable;
 	private HashMap<String, Type> env;
-	private HashMap<String, Type> subst;
 
 	private List<CompileError> errors = null;
 
@@ -44,26 +43,30 @@ public class Typeinference implements Visitor {
 		errors.add(new CompileError(errorMessage));
 	}
 
-	private void unify(Type left, Type right) {
+	public static Substitution unify(Type left, Type right) {
 		if (left.getClass() == right.getClass()) {
 			// function types must unify recursively
 			if (left instanceof TypeFunction) {
 				TypeFunction l = (TypeFunction) left;
 				TypeFunction r = (TypeFunction) right;
-				unify(l.getArgType().applySubstitution(subst), r.getArgType()
-						.applySubstitution(subst));
-				unify(l.getResultType().applySubstitution(subst), r
-						.getResultType().applySubstitution(subst));
-				return;
+				Substitution s1 = unify(l.getArgType(), r.getArgType());
+				Substitution s2 = unify(l.getResultType().applySubstitution(s1), r.getResultType().applySubstitution(s1));
+				s1.combine(s2);
+				return s1;
+			} else {
+				// base types always unify
+				return new Substitution();
 			}
-			// base types always unify
-			return;
 		} else if (left instanceof TypeVariable) {
 			// TODO: occurs check
-			subst.put(((TypeVariable) left).getVariable(), right);
+			Substitution result = new Substitution();
+			result.put(((TypeVariable) left).getVariable(), right);
+			return result;
 		} else if (right instanceof TypeVariable) {
 			// TODO: occurs check
-			subst.put(((TypeVariable) right).getVariable(), left);
+			Substitution result = new Substitution();
+			result.put(((TypeVariable) right).getVariable(), left);
+			return result;
 		} else {
 			throw new Error("cannot unify types");
 		}
@@ -75,38 +78,10 @@ public class Typeinference implements Visitor {
 
 	@Override
 	public void visit(AstExprInteger i) {
-		i.setType(typeInt);
 	}
 
 	@Override
 	public void visit(AstExprBinOp e) {
-		try {
-			e.getLeft().accept(this);
-			e.getRight().accept(this);
-
-			switch (e.getOperator()) {
-			case TOK_PLUS:
-			case TOK_MINUS:
-				unify(e.getLeft().getType(), typeInt);
-				unify(e.getRight().getType(), typeInt);
-				e.setType(typeInt);
-				break;
-
-			case TOK_LESS_THAN:
-				error("Typeinference: <= not implemented");
-				break;
-
-			default:
-				error("Typecheinference: Unknown operator " + e.getOperator());
-				break;
-			}
-
-			e.getLeft().setType(e.getLeft().getType().applySubstitution(subst));
-			e.getRight().setType(
-					e.getRight().getType().applySubstitution(subst));
-		} catch (Error err) {
-			error(err.getMessage());
-		}
 	}
 
 	// algorithm W takes: environment, expression and returns: substitution and
@@ -114,16 +89,10 @@ public class Typeinference implements Visitor {
 
 	@Override
 	public void visit(AstExprBool astBool) {
-		astBool.setType(typeBool);
 	}
 
 	@Override
 	public void visit(AstAbstraction e) {
-		Type tvar = new TypeVariable(freshTypeVariable());
-		env.put(e.getIdentifier(), tvar);
-		e.getBody().accept(this);
-		e.setType(new TypeFunction(tvar.applySubstitution(subst), e.getBody()
-				.getType().applySubstitution(subst)));
 	}
 
 	@Override
@@ -151,7 +120,6 @@ public class Typeinference implements Visitor {
 	public boolean typeinference(AstExpr ast) {
 		errors = new LinkedList<>();
 		env = new HashMap<>();
-		subst = new HashMap<>();
 		nextTypeVariable = 0;
 		ast.accept(this);
 		return errors.isEmpty();

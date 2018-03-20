@@ -1,6 +1,5 @@
-import static org.junit.Assert.*;
-
-import java.util.HashMap;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +7,7 @@ import org.junit.Test;
 import parser.AstExpr;
 import parser.AstNode;
 import parser.Parser;
-
+import typechecker.Substitution;
 import typechecker.Type;
 import typechecker.TypeBool;
 import typechecker.TypeFunction;
@@ -38,11 +37,40 @@ public class TypeInferenceTest {
 		tc.typeinference(expr);
 		return expr;
 	}
+	
+	@Test
+	public void testUnificationFails()
+	{
+		// Example from the slides where unification fails
+		Type t1 = new TypeFunction(new TypeFunction(new TypeVariable("a"), new TypeInt()), new TypeVariable("a"));
+		Type t2 = new TypeFunction(new TypeFunction(new TypeBool(), new TypeInt()), new TypeInt());
+		try{
+			Typeinference.unify(t1, t2);
+			assertTrue("unify must throw an exception", false);
+		}
+		catch(Error e)
+		{
+			assertEquals("cannot unify types", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testUnificationSucceeds()
+	{
+		// Same as before, but now two different type variables make unification succeed
+		Type t1 = new TypeFunction(new TypeFunction(new TypeVariable("a"), new TypeInt()), new TypeVariable("b"));
+		Type t2 = new TypeFunction(new TypeFunction(new TypeBool(), new TypeInt()), new TypeInt());
+		Substitution s = Typeinference.unify(t1, t2);
+		assertTrue("must have found a", s.containsKey("a"));
+		assertTrue("must have found b", s.containsKey("b"));
+		assertEquals(new TypeBool(), s.get("a"));
+		assertEquals(new TypeInt(), s.get("b"));
+	}
 
 	@Test
 	public void testSubstitutionInt() {
 		Type t = new TypeInt();
-		HashMap<String, Type> subst = new HashMap<String, Type>();
+		Substitution subst = new Substitution();
 		subst.put("a", new TypeInt());
 		assertEquals(new TypeInt(), t.applySubstitution(subst));
 	}
@@ -50,7 +78,7 @@ public class TypeInferenceTest {
 	@Test
 	public void testSubstitutionVar() {
 		Type t = new TypeVariable("a");
-		HashMap<String, Type> subst = new HashMap<String, Type>();
+		Substitution subst = new Substitution();
 		subst.put("a", new TypeBool());
 		assertEquals(new TypeBool(), t.applySubstitution(subst));
 	}
@@ -58,7 +86,7 @@ public class TypeInferenceTest {
 	@Test
 	public void testSubstitutionFunction() {
 		Type t = new TypeFunction(new TypeVariable("a"), new TypeVariable("b"));
-		HashMap<String, Type> subst = new HashMap<String, Type>();
+		Substitution subst = new Substitution();
 		subst.put("a", new TypeBool());
 		subst.put("b", new TypeInt());
 		assertEquals(new TypeFunction(new TypeBool(), new TypeInt()),

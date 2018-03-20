@@ -1,6 +1,5 @@
 package typechecker;
 
-import java.util.HashMap;
 
 public class TypeFunction implements Type {
 	private Type argType;
@@ -52,7 +51,7 @@ public class TypeFunction implements Type {
 	}
 
 	@Override
-	public Type applySubstitution(HashMap<String, Type> substitution) {
+	public Type applySubstitution(Substitution substitution) {
 		this.argType = this.argType.applySubstitution(substitution);
 		this.resultType = this.resultType.applySubstitution(substitution);
 		return this;

@@ -1,6 +1,5 @@
 package typechecker;
 
-import java.util.HashMap;
 
 public class TypeVariable implements Type {
 	private String variable;
@@ -14,7 +13,7 @@ public class TypeVariable implements Type {
 	}
 
 	@Override
-	public Type applySubstitution(HashMap<String, Type> substitution) {
+	public Type applySubstitution(Substitution substitution) {
 		if (substitution.containsKey(variable)) {
 			return substitution.get(variable);
 		} else {

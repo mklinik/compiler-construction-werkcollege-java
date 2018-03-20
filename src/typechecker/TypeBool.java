@@ -1,6 +1,5 @@
 package typechecker;
 
-import java.util.HashMap;
 
 public class TypeBool implements Type {
 	@Override
@@ -15,7 +14,7 @@ public class TypeBool implements Type {
 	}
 
 	@Override
-	public Type applySubstitution(HashMap<String, Type> substitution) {
+	public Type applySubstitution(Substitution substitution) {
 		return this;
 	}
 }
