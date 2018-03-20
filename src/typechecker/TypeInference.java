@@ -58,8 +58,16 @@ public class TypeInference implements Visitor {
 				Substitution s2 = unify(
 						l.getResultType().applySubstitution(s1), r
 								.getResultType().applySubstitution(s1));
-				s1.combine(s2);
+				s1.putAll(s2);
 				return s1;
+			} else if (left instanceof TypeVariable) {
+				if (left.equals(right)) {
+					return new Substitution();
+				} else {
+					Substitution result = new Substitution();
+					result.put(((TypeVariable) left).getVariable(), right);
+					return result;
+				}
 			} else {
 				// base types always unify
 				return new Substitution();
@@ -79,8 +87,8 @@ public class TypeInference implements Visitor {
 		}
 	}
 
-	private String freshTypeVariable() {
-		return "a" + nextTypeVariable++;
+	private Type freshTypeVariable() {
+		return new TypeVariable("a" + nextTypeVariable++);
 	}
 
 	@Override
@@ -127,6 +135,19 @@ public class TypeInference implements Visitor {
 
 	@Override
 	public void visit(AstAbstraction e) {
+		Type expectedResultType = expectedType;
+		Type a = freshTypeVariable();
+		Type b = freshTypeVariable();
+		env.put(e.getIdentifier(), a);
+		expectedType = b;
+		e.getBody().accept(this);
+		env.remove(e.getIdentifier());
+		result.putAll(unify(
+				expectedResultType.applySubstitution(result),
+				new TypeFunction(a.applySubstitution(result), b
+						.applySubstitution(result))));
+		e.setType(expectedResultType.applySubstitution(result));
+
 	}
 
 	@Override
@@ -142,7 +163,8 @@ public class TypeInference implements Visitor {
 
 	@Override
 	public void visit(AstIdentifier e) {
-		e.setType(env.get(e.getIdentifier()));
+		result.putAll(unify(expectedType, env.get(e.getIdentifier())));
+		e.setType(expectedType.applySubstitution(result));
 	}
 
 	@Override
@@ -154,7 +176,7 @@ public class TypeInference implements Visitor {
 	public TypeInference(AstExpr ast) {
 		nextTypeVariable = 0;
 		this.env = new Environment();
-		this.expectedType = new TypeVariable(freshTypeVariable());
+		this.expectedType = freshTypeVariable();
 		this.result = new Substitution();
 		errors = new LinkedList<>();
 		try {

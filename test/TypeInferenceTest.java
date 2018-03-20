@@ -58,6 +58,14 @@ public class TypeInferenceTest {
 		assertEquals(new TypeBool(), s.get("a"));
 		assertEquals(new TypeInt(), s.get("b"));
 	}
+	
+	@Test
+	public void testUnifyTwoTypeVariables() {
+		Type t1 = new TypeVariable("a1");
+		Type t2 = new TypeVariable("a2");
+		Substitution s = TypeInference.unify(t1, t2);
+		assertEquals(t1.applySubstitution(s), t2.applySubstitution(s));
+	}
 
 	@Test
 	public void testSubstitutionInt() {
@@ -108,13 +116,15 @@ public class TypeInferenceTest {
 		assertTypecheckFailure(tc, "cannot unify types\n");
 	}
 
-//	@Test
-//	public void testIdentityFunction() {
-//		AstNode e = typecheckExpr("fun x . x");
-//		assertTypecheckSuccess();
-//		assertEquals(new TypeFunction(new TypeVariable("a0"), new TypeVariable(
-//				"a0")), e.getType());
-//	}
+	@Test
+	public void testIdentityFunction() {
+		AstExpr e = parseExpr("fun x . x");
+		TypeInference tc = new TypeInference(e);
+		assertTypecheckSuccess(tc);
+		assertTrue("result must be a function", e.getType() instanceof TypeFunction);
+		TypeFunction t = (TypeFunction)e.getType();
+		assertEquals(t.getArgType(), t.getResultType());
+	}
 //
 //	@Test
 //	public void testConstantFunction() {
