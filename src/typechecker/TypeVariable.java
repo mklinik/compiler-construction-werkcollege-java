@@ -14,7 +14,7 @@ public class TypeVariable implements Type {
 	@Override
 	public Type applySubstitution(Substitution substitution) {
 		if (substitution.containsKey(variable)) {
-			return substitution.get(variable);
+			return substitution.get(variable).applySubstitution(substitution);
 		} else {
 			return this;
 		}

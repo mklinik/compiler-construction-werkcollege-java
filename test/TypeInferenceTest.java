@@ -93,6 +93,25 @@ public class TypeInferenceTest {
 		assertEquals(new TypeFunction(new TypeBool(), new TypeInt()),
 				t.applySubstitution(subst));
 	}
+	
+	
+	@Test
+	public void testSubstitutionRepeated() {
+		Type t = new TypeVariable("a");
+		Substitution subst = new Substitution();
+		subst.put("a", new TypeVariable("b"));
+		subst.put("b", new TypeInt());
+		assertEquals(new TypeInt(), t.applySubstitution(subst));
+	}
+	
+	@Test
+	public void testSubstitutionRepeatedInFunction() {
+		Type t = new TypeFunction(new TypeVariable("a"), new TypeVariable("b"));
+		Substitution subst = new Substitution();
+		subst.put("a", new TypeVariable("b"));
+		subst.put("b", new TypeInt());
+		assertEquals(new TypeFunction(new TypeInt(), new TypeInt()), t.applySubstitution(subst));
+	}
 
 	@Test
 	public void testIntegerConstant() {
