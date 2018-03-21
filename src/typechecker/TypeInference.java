@@ -22,14 +22,14 @@ public class TypeInference implements Visitor {
 
 	// result
 	private Substitution result;
-	
+
 	// These are for convenience.
 	private static final Type typeInt = new TypeInt();
 	private static final Type typeBool = new TypeBool();
 
 	// for generating fresh type variables
 	private int nextTypeVariable;
-	
+
 	private Type freshTypeVariable() {
 		return new TypeVariable("a" + nextTypeVariable++);
 	}

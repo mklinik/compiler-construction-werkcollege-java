@@ -59,7 +59,7 @@ public class TypeInferenceTest {
 		assertEquals(new TypeBool(), s.get("a"));
 		assertEquals(new TypeInt(), s.get("b"));
 	}
-	
+
 	@Test
 	public void testUnifyTwoTypeVariables() {
 		Type t1 = new TypeVariable("a1");
@@ -93,8 +93,7 @@ public class TypeInferenceTest {
 		assertEquals(new TypeFunction(new TypeBool(), new TypeInt()),
 				t.applySubstitution(subst));
 	}
-	
-	
+
 	@Test
 	public void testSubstitutionRepeated() {
 		Type t = new TypeVariable("a");
@@ -103,14 +102,15 @@ public class TypeInferenceTest {
 		subst.put("b", new TypeInt());
 		assertEquals(new TypeInt(), t.applySubstitution(subst));
 	}
-	
+
 	@Test
 	public void testSubstitutionRepeatedInFunction() {
 		Type t = new TypeFunction(new TypeVariable("a"), new TypeVariable("b"));
 		Substitution subst = new Substitution();
 		subst.put("a", new TypeVariable("b"));
 		subst.put("b", new TypeInt());
-		assertEquals(new TypeFunction(new TypeInt(), new TypeInt()), t.applySubstitution(subst));
+		assertEquals(new TypeFunction(new TypeInt(), new TypeInt()),
+				t.applySubstitution(subst));
 	}
 
 	@Test
@@ -141,8 +141,9 @@ public class TypeInferenceTest {
 		AstExpr e = parseExpr("fun x . x");
 		TypeInference tc = new TypeInference(e);
 		assertTypecheckSuccess(tc);
-		assertTrue("result must be a function", e.getType() instanceof TypeFunction);
-		TypeFunction t = (TypeFunction)e.getType();
+		assertTrue("result must be a function",
+				e.getType() instanceof TypeFunction);
+		TypeFunction t = (TypeFunction) e.getType();
 		assertEquals(t.getArgType(), t.getResultType());
 	}
 
@@ -152,13 +153,18 @@ public class TypeInferenceTest {
 		TypeInference tc = new TypeInference(e);
 		assertTypecheckSuccess(tc);
 		// all this bullshit just to check that the type is a -> b -> a
-		assertTrue("result must be a function", e.getType() instanceof TypeFunction);
-		TypeFunction t = (TypeFunction)e.getType();
-		assertTrue("result type must be a function", t.getResultType() instanceof TypeFunction);
-		TypeFunction t2 = (TypeFunction)t.getResultType();
-		assertTrue("input must be type variable", t.getArgType() instanceof TypeVariable);
-		assertTrue("second input must be type variable", t2.getArgType() instanceof TypeVariable);
-		assertTrue("result must be type variable", t2.getResultType() instanceof TypeVariable);
+		assertTrue("result must be a function",
+				e.getType() instanceof TypeFunction);
+		TypeFunction t = (TypeFunction) e.getType();
+		assertTrue("result type must be a function",
+				t.getResultType() instanceof TypeFunction);
+		TypeFunction t2 = (TypeFunction) t.getResultType();
+		assertTrue("input must be type variable",
+				t.getArgType() instanceof TypeVariable);
+		assertTrue("second input must be type variable",
+				t2.getArgType() instanceof TypeVariable);
+		assertTrue("result must be type variable",
+				t2.getResultType() instanceof TypeVariable);
 		assertEquals(t.getArgType(), t2.getResultType());
 		assertNotEquals(t.getArgType(), t2.getArgType());
 	}
