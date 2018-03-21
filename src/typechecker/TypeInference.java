@@ -102,7 +102,7 @@ public class TypeInference implements Visitor {
 		switch (e.getOperator()) {
 		case TOK_PLUS:
 		case TOK_MINUS:
-			Type expectedResultType = expectedType;
+			Type _expectedType = expectedType;
 
 			expectedType = typeInt;
 			e.getLeft().accept(this);
@@ -111,9 +111,9 @@ public class TypeInference implements Visitor {
 			expectedType = typeInt;
 			e.getRight().accept(this);
 
-			result.putAll(unify(expectedResultType.applySubstitution(result),
+			result.putAll(unify(_expectedType.applySubstitution(result),
 					typeInt));
-			e.setType(expectedResultType.applySubstitution(result));
+			e.setType(_expectedType.applySubstitution(result));
 			break;
 
 		case TOK_LESS_THAN:
@@ -135,7 +135,7 @@ public class TypeInference implements Visitor {
 
 	@Override
 	public void visit(AstAbstraction e) {
-		Type expectedResultType = expectedType;
+		Type _expectedType = expectedType;
 		Type a = freshTypeVariable();
 		Type b = freshTypeVariable();
 		env.put(e.getIdentifier(), a);
@@ -143,10 +143,10 @@ public class TypeInference implements Visitor {
 		e.getBody().accept(this);
 		env.remove(e.getIdentifier());
 		result.putAll(unify(
-				expectedResultType.applySubstitution(result),
+				_expectedType.applySubstitution(result),
 				new TypeFunction(a.applySubstitution(result), b
 						.applySubstitution(result))));
-		e.setType(expectedResultType.applySubstitution(result));
+		e.setType(_expectedType.applySubstitution(result));
 
 	}
 
