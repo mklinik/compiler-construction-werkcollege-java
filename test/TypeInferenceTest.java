@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
 
@@ -125,21 +126,31 @@ public class TypeInferenceTest {
 		TypeFunction t = (TypeFunction)e.getType();
 		assertEquals(t.getArgType(), t.getResultType());
 	}
-//
-//	@Test
-//	public void testConstantFunction() {
-//		AstNode e = typecheckExpr("fun x . fun y . x");
-//		assertTypecheckSuccess();
-//		assertEquals(new TypeFunction(new TypeVariable("a0"), new TypeFunction(
-//				new TypeVariable("a1"), new TypeVariable("a0"))), e.getType());
-//	}
-//
-//	@Test
-//	public void testAdditionFunction() {
-//		AstNode e = typecheckExpr("fun x . fun y . x + y");
-//		assertTypecheckSuccess();
-//		assertEquals(new TypeFunction(new TypeInt(), new TypeFunction(
-//				new TypeInt(), new TypeInt())), e.getType());
-//	}
+
+	@Test
+	public void testConstantFunction() {
+		AstExpr e = parseExpr("fun x . fun y . x");
+		TypeInference tc = new TypeInference(e);
+		assertTypecheckSuccess(tc);
+		// all this bullshit just to check that the type is a -> b -> a
+		assertTrue("result must be a function", e.getType() instanceof TypeFunction);
+		TypeFunction t = (TypeFunction)e.getType();
+		assertTrue("result type must be a function", t.getResultType() instanceof TypeFunction);
+		TypeFunction t2 = (TypeFunction)t.getResultType();
+		assertTrue("input must be type variable", t.getArgType() instanceof TypeVariable);
+		assertTrue("second input must be type variable", t2.getArgType() instanceof TypeVariable);
+		assertTrue("result must be type variable", t2.getResultType() instanceof TypeVariable);
+		assertEquals(t.getArgType(), t2.getResultType());
+		assertNotEquals(t.getArgType(), t2.getArgType());
+	}
+
+	@Test
+	public void testAdditionFunction() {
+		AstExpr e = parseExpr("fun x . fun y . x + y");
+		TypeInference tc = new TypeInference(e);
+		assertTypecheckSuccess(tc);
+		assertEquals(new TypeFunction(new TypeInt(), new TypeFunction(
+				new TypeInt(), new TypeInt())), e.getType());
+	}
 
 }
