@@ -16,18 +16,23 @@ import util.CompileError;
 import util.Visitor;
 
 public class TypeInference implements Visitor {
-	// These are for convenience.
-	private static final Type typeInt = new TypeInt();
-	private static final Type typeBool = new TypeBool();
-
-	private int nextTypeVariable;
-
 	// input parameters
 	private Environment env;
 	private Type expectedType;
 
 	// result
 	private Substitution result;
+	
+	// These are for convenience.
+	private static final Type typeInt = new TypeInt();
+	private static final Type typeBool = new TypeBool();
+
+	// for generating fresh type variables
+	private int nextTypeVariable;
+	
+	private Type freshTypeVariable() {
+		return new TypeVariable("a" + nextTypeVariable++);
+	}
 
 	private List<CompileError> errors = null;
 
@@ -48,6 +53,7 @@ public class TypeInference implements Visitor {
 		errors.add(new CompileError(errorMessage));
 	}
 
+	// Unification as in the lecture slides
 	public static Substitution unify(Type left, Type right) {
 		if (left.getClass() == right.getClass()) {
 			// function types must unify recursively
@@ -85,10 +91,6 @@ public class TypeInference implements Visitor {
 		} else {
 			throw new Error("cannot unify types");
 		}
-	}
-
-	private Type freshTypeVariable() {
-		return new TypeVariable("a" + nextTypeVariable++);
 	}
 
 	@Override
