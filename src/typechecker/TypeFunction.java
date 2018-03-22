@@ -18,7 +18,7 @@ public class TypeFunction extends Type {
 	}
 	
 	@Override
-	public Substitution unifyWith(TypeFunction t)
+	protected Substitution unifyWith(TypeFunction t)
 	{
 		Substitution s1 = this.getArgType().unifyWith(t.getArgType());
 		Substitution s2 = this.getResultType().applySubstitution(s1).unifyWith(t.getResultType().applySubstitution(s1));

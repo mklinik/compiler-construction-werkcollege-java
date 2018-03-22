@@ -21,14 +21,10 @@ public class TypeVariable extends Type {
 	}
 	
 	@Override
-	public Substitution unifyWith(Type t)
+	protected Substitution unifyWith(TypeVariable t)
 	{
-		// TODO: occurs check
 		Substitution s = new Substitution();
-		if( ! this.equals(t) )
-		{
-			s.put(variable, t);
-		}
+		s.put(variable, t);
 		return s;
 	}
 

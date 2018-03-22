@@ -47,5 +47,14 @@ public class UnificationTest {
 			assertTrue("error message must start with cannot unify types", e.getMessage().startsWith("cannot unify types"));
 		}
 	}
+	
+	@Test
+	public void testUnificationVariableAndFunction() {
+		Type t1 = new TypeVariable("a");
+		Type t2 = new TypeFunction(new TypeInt(), new TypeBool());
+		Substitution s = t1.unifyWith(t2);
+		assertTrue("must have found a", s.containsKey("a"));
+		assertEquals(t1.applySubstitution(s), t2.applySubstitution(s));
+	}
 
 }

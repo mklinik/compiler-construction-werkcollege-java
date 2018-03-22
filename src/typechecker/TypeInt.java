@@ -18,7 +18,7 @@ public class TypeInt extends Type {
 	}
 	
 	@Override
-	public Substitution unifyWith(TypeInt t)
+	protected Substitution unifyWith(TypeInt t)
 	{
 		return new Substitution();
 	}

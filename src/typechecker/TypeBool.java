@@ -18,7 +18,7 @@ public class TypeBool extends Type {
 	}
 	
 	@Override
-	public Substitution unifyWith(TypeBool t)
+	protected Substitution unifyWith(TypeBool t)
 	{
 		return new Substitution();
 	}
