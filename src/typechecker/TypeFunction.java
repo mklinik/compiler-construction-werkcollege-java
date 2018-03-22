@@ -1,6 +1,6 @@
 package typechecker;
 
-public class TypeFunction implements Type {
+public class TypeFunction extends Type {
 	private Type argType;
 	private Type resultType;
 
@@ -15,6 +15,15 @@ public class TypeFunction implements Type {
 	public TypeFunction(Type argType, Type resultType) {
 		this.argType = argType;
 		this.resultType = resultType;
+	}
+	
+	@Override
+	public Substitution unifyWith(TypeFunction t)
+	{
+		Substitution s1 = this.getArgType().unifyWith(t.getArgType());
+		Substitution s2 = this.getResultType().applySubstitution(s1).unifyWith(t.getResultType().applySubstitution(s1));
+		s1.putAll(s2);
+		return s1;
 	}
 
 	@Override

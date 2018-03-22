@@ -1,6 +1,6 @@
 package typechecker;
 
-public class TypeVariable implements Type {
+public class TypeVariable extends Type {
 	private String variable;
 
 	public String getVariable() {
@@ -18,6 +18,18 @@ public class TypeVariable implements Type {
 		} else {
 			return this;
 		}
+	}
+	
+	@Override
+	public Substitution unifyWith(Type t)
+	{
+		// TODO: occurs check
+		Substitution s = new Substitution();
+		if( ! this.equals(t) )
+		{
+			s.put(variable, t);
+		}
+		return s;
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package typechecker;
 
-public class TypeInt implements Type {
+public class TypeInt extends Type {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -15,5 +15,11 @@ public class TypeInt implements Type {
 	@Override
 	public Type applySubstitution(Substitution substitution) {
 		return this;
+	}
+	
+	@Override
+	public Substitution unifyWith(TypeInt t)
+	{
+		return new Substitution();
 	}
 }
