@@ -95,7 +95,7 @@ public class TypeInference implements Visitor {
 
 	@Override
 	public void visit(AstExprInteger i) {
-		result.putAll(expectedType.unifyWith(typeInt));
+		result.putAll(unify(expectedType, typeInt));
 		i.setType(expectedType.applySubstitution(result));
 	}
 
@@ -113,7 +113,7 @@ public class TypeInference implements Visitor {
 			expectedType = typeInt;
 			e.getRight().accept(this);
 
-			result.putAll(_expectedType.applySubstitution(result).unifyWith(
+			result.putAll(unify(_expectedType.applySubstitution(result),
 					typeInt));
 			e.setType(_expectedType.applySubstitution(result));
 			break;
@@ -131,7 +131,7 @@ public class TypeInference implements Visitor {
 
 	@Override
 	public void visit(AstExprBool e) {
-		result.putAll(expectedType.unifyWith(typeBool));
+		result.putAll(unify(expectedType, typeBool));
 		e.setType(expectedType.applySubstitution(result));
 	}
 
@@ -144,7 +144,8 @@ public class TypeInference implements Visitor {
 		expectedType = b;
 		e.getBody().accept(this);
 		env.remove(e.getIdentifier());
-		result.putAll(_expectedType.applySubstitution(result).unifyWith(
+		result.putAll(unify(
+				_expectedType.applySubstitution(result),
 				new TypeFunction(a.applySubstitution(result), b
 						.applySubstitution(result))));
 		e.setType(_expectedType.applySubstitution(result));
@@ -163,7 +164,7 @@ public class TypeInference implements Visitor {
 
 	@Override
 	public void visit(AstIdentifier e) {
-		result.putAll(expectedType.unifyWith(env.get(e.getIdentifier())));
+		result.putAll(unify(expectedType, env.get(e.getIdentifier())));
 		e.setType(expectedType.applySubstitution(result));
 	}
 
