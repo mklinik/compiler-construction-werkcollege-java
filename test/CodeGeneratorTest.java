@@ -68,4 +68,11 @@ public class CodeGeneratorTest {
 		assertEquals("6", result);
 	}
 
+	@Test
+	public void testAdditionVsMultiplicationPrecedence()
+			throws FileNotFoundException {
+		String result = runProgram("4 + 2 * 3 + 2", false);
+		assertEquals("12", result);
+	}
+
 }
