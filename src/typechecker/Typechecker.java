@@ -20,6 +20,7 @@ public class Typechecker implements Visitor {
 	// These are for convenience.
 	private static final Type typeInt = new TypeInt();
 	private static final Type typeBool = new TypeBool();
+	
 	private HashMap<String, Type> env;
 
 	private List<CompileError> errors = null;
@@ -90,19 +91,19 @@ public class Typechecker implements Visitor {
 	}
 
 	@Override
-	public void visit(AstAbstraction astLetBinding) {
+	public void visit(AstAbstraction astFunction) {
 		// TODO: make a deep copy of the current environment and restore it at
 		// the end of the function! Otherwise the added definition will leak to
 		// outside the let binding.
-		if (astLetBinding.getAstType() == null) {
+		if (astFunction.getAstType() == null) {
 			error("Typechecker: Function arguments must have types");
 		}
-		astLetBinding.getAstType().accept(this);
-		env.put(astLetBinding.getIdentifier(), astLetBinding.getAstType()
+		astFunction.getAstType().accept(this);
+		env.put(astFunction.getIdentifier(), astFunction.getAstType()
 				.getType());
-		astLetBinding.getBody().accept(this);
-		astLetBinding.setType(new TypeFunction(astLetBinding.getAstType()
-				.getType(), astLetBinding.getBody().getType()));
+		astFunction.getBody().accept(this);
+		astFunction.setType(new TypeFunction(astFunction.getAstType()
+				.getType(), astFunction.getBody().getType()));
 	}
 
 	@Override

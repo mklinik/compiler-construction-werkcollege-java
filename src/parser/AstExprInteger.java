@@ -5,7 +5,7 @@ import lexer.Token;
 import lexer.TokenInteger;
 
 public class AstExprInteger extends AstExpr {
-	private int value;
+	private final int value;
 
 	public int getValue() {
 		return value;

@@ -72,7 +72,7 @@ public class TypeInferenceTest {
 	public void testSubstitutionInt() {
 		Type t = new TypeInt();
 		Substitution subst = new Substitution();
-		subst.put("a", new TypeInt());
+		subst.put("a", new TypeBool());
 		assertEquals(new TypeInt(), t.applySubstitution(subst));
 	}
 
