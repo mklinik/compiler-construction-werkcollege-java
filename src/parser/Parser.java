@@ -116,6 +116,14 @@ public class Parser {
 	}
 
 	public AstExpr pBaseExpr() {
+		if(match(TokenType.TOK_PAREN_OPEN))
+		{
+			next();
+			AstExpr result = pExpr();
+			match(TokenType.TOK_PAREN_CLOSE);
+			next();
+			return result;
+		}
 		if (match(TokenType.TOK_INT)) {
 			return new AstExprInteger(next());
 		}

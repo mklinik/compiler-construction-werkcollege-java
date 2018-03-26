@@ -87,6 +87,10 @@ public class CodeGeneratorTest {
 			throws FileNotFoundException {
 		String result = runProgram("6 - 3 - 2", false);
 		assertEquals("1", result);
+		result = runProgram("6 - (3 - 2)", false);
+		assertEquals("5", result);
+		result = runProgram("(6 - 3) - 2", false);
+		assertEquals("1", result);
 	}
 
 }
