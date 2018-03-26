@@ -62,4 +62,10 @@ public class CodeGeneratorTest {
 		assertEquals("42", result);
 	}
 
+	@Test
+	public void testAddition() throws FileNotFoundException {
+		String result = runProgram("4 + 2", false);
+		assertEquals("6", result);
+	}
+
 }

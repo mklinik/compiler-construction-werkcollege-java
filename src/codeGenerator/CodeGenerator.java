@@ -56,6 +56,8 @@ public class CodeGenerator implements Visitor {
 
 	@Override
 	public void visit(AstExprBinOp e) {
+		e.getLeft().accept(this);
+		e.getRight().accept(this);
 		switch (e.getOperator()) {
 		case TOK_PLUS:
 			output.add("add");
