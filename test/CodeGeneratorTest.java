@@ -75,4 +75,18 @@ public class CodeGeneratorTest {
 		assertEquals("12", result);
 	}
 
+	@Test
+	public void testSubtraction()
+			throws FileNotFoundException {
+		String result = runProgram("42-45", false);
+		assertEquals("-3", result);
+	}
+
+	@Test
+	public void testSubtractionAssociativity()
+			throws FileNotFoundException {
+		String result = runProgram("6 - 3 - 2", false);
+		assertEquals("1", result);
+	}
+
 }

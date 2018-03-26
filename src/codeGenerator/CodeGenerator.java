@@ -65,6 +65,9 @@ public class CodeGenerator implements Visitor {
 		case TOK_MULT:
 			output.add("mul");
 			break;
+		case TOK_MINUS:
+			output.add("sub");
+			break;
 		default:
 			throw new Error("Code generator: AstExprBinOp: unknown operator "
 					+ e.getOperator().toString());
