@@ -9,7 +9,6 @@ import codeGenerator.CodeGenerator;
 import parser.AstExpr;
 import parser.Parser;
 
-
 public class CodeGeneratorTest {
 
 	@Test

@@ -22,24 +22,21 @@ public class CodeGenerator implements Visitor {
 	public List<String> getOutput() {
 		return output;
 	}
-	
-	public CodeGenerator()
-	{
+
+	public CodeGenerator() {
 		output = new LinkedList<>();
 	}
-	
-	public void writeToFile(String filename) throws FileNotFoundException
-	{
+
+	public void writeToFile(String filename) throws FileNotFoundException {
 		PrintWriter out = new PrintWriter(filename);
-		for( String line : output )
-		{
+		for (String line : output) {
 			out.println(line);
 		}
 		out.close();
 	}
-	
-	public void generateCode(AstNode ast, String outputFilename) throws FileNotFoundException
-	{
+
+	public void generateCode(AstNode ast, String outputFilename)
+			throws FileNotFoundException {
 		ast.accept(this);
 		writeToFile(outputFilename);
 	}
@@ -51,13 +48,13 @@ public class CodeGenerator implements Visitor {
 
 	@Override
 	public void visit(AstExprBinOp e) {
-		switch(e.getOperator())
-		{
+		switch (e.getOperator()) {
 		case TOK_PLUS:
 			output.add("add");
 			break;
 		default:
-			throw new Error("Code generator: AstExprBinOp: unknown operator " + e.getOperator().toString());
+			throw new Error("Code generator: AstExprBinOp: unknown operator "
+					+ e.getOperator().toString());
 		}
 	}
 
