@@ -37,13 +37,21 @@ public class CodeGenerator implements Visitor {
 
 	public void generateCode(AstNode ast, String outputFilename)
 			throws FileNotFoundException {
+		generateCode(ast, outputFilename, null);
+	}
+
+	public void generateCode(AstNode ast, String outputFilename,
+			String postamble) throws FileNotFoundException {
 		ast.accept(this);
+		if (postamble != null) {
+			output.add(postamble);
+		}
 		writeToFile(outputFilename);
 	}
 
 	@Override
 	public void visit(AstExprInteger i) {
-		output.add("push " + i.getValue());
+		output.add("ldc " + i.getValue());
 	}
 
 	@Override
