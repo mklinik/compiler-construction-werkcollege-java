@@ -16,10 +16,4 @@ public class TypeInt extends Type {
 	public Type applySubstitution(Substitution substitution) {
 		return this;
 	}
-	
-	@Override
-	protected Substitution unifyWith(TypeInt t)
-	{
-		return new Substitution();
-	}
 }

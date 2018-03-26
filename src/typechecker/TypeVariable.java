@@ -19,14 +19,6 @@ public class TypeVariable extends Type {
 			return this;
 		}
 	}
-	
-	@Override
-	protected Substitution unifyWith(TypeVariable t)
-	{
-		Substitution s = new Substitution();
-		s.put(variable, t);
-		return s;
-	}
 
 	@Override
 	public int hashCode() {
